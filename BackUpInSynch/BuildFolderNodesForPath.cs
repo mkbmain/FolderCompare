@@ -7,11 +7,10 @@ namespace BackUpInSynch
     {
         public static FolderNode BuildPath(string path)
         {
-
-            var name = "\\"+NameCleaner(path);
+            var name = "\\" + NameCleaner(path);
             var node = new FolderNode
             {
-                Name = name, Text =name,
+                Name = name, Text = name,
             };
 
             foreach (var item in System.IO.Directory.GetDirectories(path))
@@ -22,7 +21,7 @@ namespace BackUpInSynch
             foreach (var item in System.IO.Directory.GetFiles(path))
             {
                 var names = NameCleaner(item);
-                node.Nodes.Add(names,names);
+                node.Nodes.Add(names, names);
             }
 
             return node;
