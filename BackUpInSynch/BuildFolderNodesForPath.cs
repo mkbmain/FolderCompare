@@ -1,27 +1,27 @@
 using System.Linq;
-using System.Windows.Forms;
+using BackUpInSynch.DirectoryStructure;
 
 namespace BackUpInSynch
 {
     public static class BuildFolderNodesForPath
     {
-        public static FolderNode BuildPath(string path)
+        public static DirectoryNode BuildPath(string path,bool calcHash = false)
         {
             var name = $"{FileHelper.DirectorySeparatorStr}{NameCleaner(path)}";
-            var node = new FolderNode
+            var node = new DirectoryNode
             {
-                Name = name, Text = name,
+                Name = name, FullLocation = path
             };
 
             foreach (var item in System.IO.Directory.GetDirectories(path))
             {
-                node.Nodes.Add(BuildPath(item));
+                node.SubDirectories.Add(BuildPath(item));
             }
 
             foreach (var item in System.IO.Directory.GetFiles(path))
             {
                 var names = NameCleaner(item);
-                node.Nodes.Add(names, names);
+                node.Files.Add(new FileNode{ Name = names, FullLocation = item, Hash = calcHash ? FileHelper.CalculateMD5(item) :null});
             }
 
             return node;

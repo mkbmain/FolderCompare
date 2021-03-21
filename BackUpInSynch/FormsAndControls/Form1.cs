@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using BackUpInSynch.DirectoryStructure;
 
 namespace BackUpInSynch
 {
@@ -48,8 +49,8 @@ namespace BackUpInSynch
             RunInBackground.Run((pathOne, pathTwo), DoWork, (a, b) => { RunBtn.Enabled = true; }, null);
         }
 
-        private static FolderNode _folderNodeOne;
-        private FolderNode _folderNodeTwo;
+        private static DirectoryNode _folderNodeOne;
+        private DirectoryNode _folderNodeTwo;
 
         private void DoWork(object o, DoWorkEventArgs args)
         {

@@ -12,7 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="FolderComparer.cs">
+      <Compile Update="FormsAndControls\FolderComparer.cs">
         <SubType>Form</SubType>
       </Compile>
     </ItemGroup>
