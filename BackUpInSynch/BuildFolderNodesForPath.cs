@@ -1,27 +1,35 @@
 using System.Linq;
-using BackUpInSynch.DirectoryStructure;
+using BackUpInSynch.Models.ScanStructure;
+using BackUpInSynch.Utils;
 
 namespace BackUpInSynch
 {
     public static class BuildFolderNodesForPath
     {
-        public static DirectoryNode BuildPath(string path,bool calcHash = false)
+        public static DirectoryNode BuildPath(string basePath ,string path, bool calcHash = false)
         {
-            var name = $"{FileHelper.DirectorySeparatorStr}{NameCleaner(path)}";
+            var name = $"{FileAndIoUtils.DirectorySeparatorStr}{NameCleaner(path)}";
             var node = new DirectoryNode
             {
-                Name = name, FullLocation = path
+                Name = name, 
+                
+                FullLocation = path
             };
 
             foreach (var item in System.IO.Directory.GetDirectories(path))
             {
-                node.SubDirectories.Add(BuildPath(item));
+                node.SubDirectories.Add(BuildPath(basePath,item));
             }
 
             foreach (var item in System.IO.Directory.GetFiles(path))
             {
                 var names = NameCleaner(item);
-                node.Files.Add(new FileNode{ Name = names, FullLocation = item, Hash = calcHash ? FileHelper.CalculateMd5(item) :null});
+                node.Files.Add(new FileNode
+                {
+                    Name = names, 
+                    FullLocation = item,
+                    Hash = calcHash ? FileAndIoUtils.CalculateMd5(item) : string.Empty
+                });
             }
 
             return node;
@@ -29,7 +37,7 @@ namespace BackUpInSynch
 
         private static string NameCleaner(string path)
         {
-            return path.Split(FileHelper.DirectorySeparatorStr).Last();
+            return path.Split(FileAndIoUtils.DirectorySeparatorStr).Last();
         }
     }
 }

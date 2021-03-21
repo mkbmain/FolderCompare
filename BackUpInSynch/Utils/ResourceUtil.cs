@@ -1,9 +1,9 @@
 using System.Drawing;
 using System.Reflection;
 
-namespace BackUpInSynch
+namespace BackUpInSynch.Utils
 {
-    public class ResourceHelper
+    public class ResourceUtil
     {
         public static Image GetImageFromResource(string fileName)
         {

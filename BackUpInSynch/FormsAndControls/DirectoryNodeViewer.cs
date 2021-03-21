@@ -1,6 +1,6 @@
 using System.Drawing;
 using System.Windows.Forms;
-using BackUpInSynch.DirectoryStructure;
+using BackUpInSynch.Models.ScanStructure;
 
 namespace BackUpInSynch.FormsAndControls
 {

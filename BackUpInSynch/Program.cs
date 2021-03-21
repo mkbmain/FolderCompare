@@ -1,10 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using BackUpInSynch.FormsAndControls;
 using BackUpInSynch.FormsAndControls.MainForm;
 
 namespace BackUpInSynch

@@ -2,7 +2,8 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using BackUpInSynch.DirectoryStructure;
+using BackUpInSynch.Models.ScanStructure;
+using BackUpInSynch.Utils;
 
 namespace BackUpInSynch.FormsAndControls.MainForm
 {
@@ -20,11 +21,9 @@ namespace BackUpInSynch.FormsAndControls.MainForm
             FolderTwo.Top = FolderOne.Bottom + 5;
             this.Controls.Add(FolderOne);
             this.Controls.Add(FolderTwo);
-            RunBtn.Location  = new Point(33 + FolderTwo.Bottom, this.Width / 2);
+            RunBtn.Location = new Point(33 + FolderTwo.Bottom, this.Width / 2);
             this.Width = 640;
             RunBtn.Click += RunBtn_Click;
-            var r = new ResultsForm.ResultsForm(new FileNode[0], new DirectoryNode[0], new FileNode[0]);
-            r.Show();
         }
 
 
@@ -32,7 +31,7 @@ namespace BackUpInSynch.FormsAndControls.MainForm
         {
             if (RunBtn.Text == "Results")
             {
-                var fc = new DirectoryNodeViewer(_folderNodeOne, _folderNodeTwo);
+                var fc = new ResultsForm.ResultsForm(_folderNodeOne, _folderNodeTwo);
                 fc.Show();
                 return;
             }
@@ -48,7 +47,7 @@ namespace BackUpInSynch.FormsAndControls.MainForm
             RunBtn.Text = "Results";
             RunBtn.Enabled = false;
 
-            RunInBackground.Run((pathOne, pathTwo), DoWork, (a, b) => { RunBtn.Enabled = true; }, null);
+            BackgroundGenerator.Run((pathOne, pathTwo), DoWork, (a, b) => { RunBtn.Enabled = true; }, null);
         }
 
         private static DirectoryNode _folderNodeOne;
@@ -57,8 +56,8 @@ namespace BackUpInSynch.FormsAndControls.MainForm
         private void DoWork(object o, DoWorkEventArgs args)
         {
             var (pathOne, pathTwo) = (ValueTuple<string, string>) args.Argument;
-            _folderNodeOne = BuildFolderNodesForPath.BuildPath(pathOne);
-            _folderNodeTwo = BuildFolderNodesForPath.BuildPath(pathTwo);
+            _folderNodeOne = BuildFolderNodesForPath.BuildPath(pathOne, pathOne);
+            _folderNodeTwo = BuildFolderNodesForPath.BuildPath(pathTwo, pathTwo);
             MessageBox.Show("Results available");
         }
     }

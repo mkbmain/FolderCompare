@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace BackUpInSynch.DirectoryStructure
+namespace BackUpInSynch.Models.ScanStructure
 {
     public class DirectoryNode : NodeBase
     {

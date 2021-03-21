@@ -1,40 +1,70 @@
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using BackUpInSynch.DirectoryStructure;
-using BackUpInSynch.FormsAndControls.MainForm;
+using BackUpInSynch.CalculateMissMatches;
+using BackUpInSynch.Models.ResultStructure;
+using BackUpInSynch.Models.ScanStructure;
 
 namespace BackUpInSynch.FormsAndControls.ResultsForm
 {
     public partial class ResultsForm : Form
     {
-        private List<FileNode> _missingFiles { get; set; }
-        private List<DirectoryNode> _missingDirectoryNodes { get; set; }
-        private List<FileNode> _missMatchFiles { get; set; }
+        private List<DirectoryResultDetails> _directories { get; set; }
+        private List<FileResultDetails> _files { get; set; }
+        private Panel Panel;
 
-        public ResultsForm(IEnumerable<FileNode> missingFiles, IEnumerable<DirectoryNode> missingDirectoryNodes,
-            IEnumerable<FileNode> missMatchFiles)
+        public ResultsForm(DirectoryNode source, DirectoryNode destination)
         {
             this.AutoSize = false;
             this.Size = new Size(450, 600);
-            _missingFiles = missingFiles as List<FileNode> ?? missingFiles.ToList();
-            _missingDirectoryNodes = missingDirectoryNodes as List<DirectoryNode> ?? missingDirectoryNodes.ToList();
-            _missMatchFiles = missMatchFiles as List<FileNode> ?? missMatchFiles.ToList();
             InitializeComponent();
+            Panel = new Panel {Name = "M", Size = new Size(this.Width - 30, this.Height - 50), AutoScroll = true};
 
-            var p = new Panel {Size = new Size(this.Width - 30, this.Height - 50), AutoScroll = true};
+            var issue = CalculateDiffrences.Issues(source.BasePath, destination.BasePath, source, destination);
+            _directories = issue.DirectoryResultDetailsList;
+            _files = issue.FileResultDetailsList;
+            DrawWindow();
+            this.Controls.Add(Panel);
+        }
+
+
+        private void DrawWindow()
+        {
             var location = 0;
-            
-            foreach (var item in _missingDirectoryNodes)
+            foreach (var item in Panel.Controls.Cast<Control>())
             {
-                var directory = new DirectoryView(item) {Top = location};
-                location += directory.Height + 5;
-                p.Controls.Add(directory);
+                Panel.Controls.Remove(item);
             }
-            
 
-            this.Controls.Add(p);
+            foreach (var directoryView in _directories.Select(item => new DirectoryView(item) {Top = location}))
+            {
+                directoryView.PathChosen += DirectoryOnPathChosen;
+                location += directoryView.Height + 5;
+                Panel.Controls.Add(directoryView);
+            }
+
+            foreach (var fileView in _files.Select(item => new FileView(item) {Top = location}))
+            {
+                fileView.PathChosen += FileOnPathChosen;
+                location += fileView.Height + 5;
+                Panel.Controls.Add(fileView);
+            }
+        }
+
+        private void DirectoryOnPathChosen(object sender, EventArgs e)
+        {
+            var item = e as DirectoryResultDetails;
+            _directories = _directories.Where(f => f.Data.Id != item.Data.Id).
+                Where(f => f.Linked == null || f.Linked.Id != item.Data.Id).ToList();
+        }
+
+        private void FileOnPathChosen(object sender, EventArgs e)
+        {
+            var item = e as FileResultDetails;
+            _files = _files.Where(f => f.Data.Id != item.Data.Id).
+                            Where(f => f.Linked == null || f.Linked.Id != item.Data.Id).ToList();
         }
     }
 }

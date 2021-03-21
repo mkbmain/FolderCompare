@@ -5,18 +5,18 @@ namespace BackUpInSynch.FormsAndControls.MainForm
 {
     public class DirectoryPanel : Panel
     {
-        private const int Height = 22;
+        private const int MyHeight = 22;
         
-        private Label Title = new Label {Text = "Open Folder:", AutoSize = false,Size = new Size(77,Height)};
-        private TextBox PathTxtBox = new TextBox {Multiline = false, AutoSize = false,Size = new Size(280, Height-2), ReadOnly = false};
-        private Button OpenButton = new Button {Text = "..",AutoSize = false, Size = new Size(23, Height)};
+        private Label Title = new Label {Text = "Open Folder:", AutoSize = false,Size = new Size(77,MyHeight)};
+        private TextBox PathTxtBox = new TextBox {Multiline = false, AutoSize = false,Size = new Size(280, MyHeight-2), ReadOnly = false};
+        private Button OpenButton = new Button {Text = "..",AutoSize = false, Size = new Size(23, MyHeight)};
 
         public string GetPathIfValid => System.IO.Directory.Exists(PathTxtBox.Text) ? PathTxtBox.Text : null;
         private FolderBrowserDialog _folderBrowserDialog = new FolderBrowserDialog();
 
         public DirectoryPanel()
         {
-            this.Size = new Size(400, Height);
+            this.Size = new Size(400, MyHeight);
             Title.Location = new Point(1, 1);
             PathTxtBox.Location = new Point(Title.Right + 2, 1);
             OpenButton.Location = new Point(PathTxtBox.Right + 2, 1);

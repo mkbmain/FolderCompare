@@ -1,8 +1,8 @@
 using System.Windows.Forms;
 
-namespace BackUpInSynch.DirectoryStructure
+namespace BackUpInSynch.Models.ScanStructure
 {
-    public class FileNode :NodeBase
+    public class FileNode : NodeBase
     {
         public string Hash { get; set; }
 
