@@ -17,6 +17,7 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
 
         public ResultsForm(DirectoryNode source, DirectoryNode destination)
         {
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Text = "Results";
             AutoSize = false;
             Size = new Size(750, 600);

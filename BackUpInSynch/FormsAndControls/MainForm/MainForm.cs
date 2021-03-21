@@ -15,6 +15,7 @@ namespace BackUpInSynch.FormsAndControls.MainForm
 
         public MainForm()
         {
+            
             Controls.Add(_runBtn);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
