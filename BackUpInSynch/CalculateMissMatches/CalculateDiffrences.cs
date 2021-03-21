@@ -113,7 +113,8 @@ namespace BackUpInSynch.CalculateMissMatches
                 var match = items == null ? dest : source;
                 var subMatch = match.SubDirectories.FirstOrDefault(f => f.Name == item.Name);
                 output.NamesMatched.Add(item.Name, true);
-                var complete = Issues(sourceBasePath, destinationBasePath, item, subMatch);
+                var complete = Issues(match == dest ? sourceBasePath : destinationBasePath,
+                    match == dest ? destinationBasePath : sourceBasePath, item, subMatch);
                 output.DirectoryResultDetailsList.AddRange(complete.DirectoryResultDetailsList);
                 output.FileResultDetailsList.AddRange(complete.FileResultDetailsList);
             }

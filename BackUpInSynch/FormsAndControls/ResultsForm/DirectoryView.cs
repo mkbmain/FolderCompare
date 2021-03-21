@@ -15,10 +15,10 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
 
         private Panel DirectoryPanel(DirectoryResultDetails node)
         {
-            var panel = new Panel();
+            var panel = new Panel{Width = _size.Width-65,Height = 220};
             var label = new Label {Text = node.Data.FullLocation, AutoSize = true};
             var treeView = new TreeView
-                {Top = label.Bottom + 5, Nodes = {node.Data.ToTreeNode()}, Size = new Size(200, 200)};
+                {Top = label.Bottom + 5, Nodes = {node.Data.ToTreeNode()}, Size = new Size(panel.Width - 90, 200)};
             DropDownBox = new ComboBox
                 {Location = new Point(treeView.Right + 7, treeView.Top), Size = new Size(80, 33)};
             foreach (var actionHandlerWithText in node.ActionHandlerWithTexts)
@@ -38,6 +38,8 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
 
             panel.Height = label.Height + treeView.Height;
             panel.Controls.Add(label);
+            panel.Controls.Add(DropDownBox);
+            panel.Controls.Add(button);
             panel.Controls.Add(treeView);
             return panel;
         }
