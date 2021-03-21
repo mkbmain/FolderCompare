@@ -9,7 +9,7 @@ using BackUpInSynch.Models.ScanStructure;
 
 namespace BackUpInSynch.FormsAndControls.ResultsForm
 {
-    public partial class ResultsForm : Form
+    public  class ResultsForm : Form
     {
         private List<DirectoryResultDetails> _directories { get; set; }
         private List<FileResultDetails> _files { get; set; }
@@ -19,7 +19,7 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
         {
             this.AutoSize = false;
             this.Size = new Size(750, 600);
-            InitializeComponent();
+            this.Text = "Results";
             var issue = CalculateDiffrences.Issues(source.BasePath, destination.BasePath, source, destination);
             _directories = issue.DirectoryResultDetailsList;
             _files = issue.FileResultDetailsList;
