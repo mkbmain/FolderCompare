@@ -7,13 +7,9 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
     public abstract class NodeViewBase : Panel
     {
         protected ComboBox DropDownBox;
+        
 
-        protected void DrawMe(Image image, string title, string description, Control expandControl)
-        {
-            DrawMe(new Size(400, 56), image, title, description, expandControl);
-        }
-
-        private Size _size;
+        protected Size _size = new Size(700, 56);
         private Size _withControl;
 
 

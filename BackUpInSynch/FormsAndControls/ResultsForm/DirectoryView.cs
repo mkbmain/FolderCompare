@@ -52,7 +52,7 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
 
         public DirectoryView(DirectoryResultDetails node)
         {
-            DrawMe(ResourceUtil.GetImageFromResource("BackUpInSynch.openedfolder.png"), node.Data.Name,
+            DrawMe(_size,ResourceUtil.GetImageFromResource("BackUpInSynch.openedfolder.png"), node.Data.Name,
                 "Directory is missing", DirectoryPanel(node));
             DirectoryResultDetails = node;
         }
