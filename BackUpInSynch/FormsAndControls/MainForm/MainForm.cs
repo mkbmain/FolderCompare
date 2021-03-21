@@ -9,9 +9,9 @@ namespace BackUpInSynch.FormsAndControls.MainForm
 {
     public class MainForm : Form
     {
-        private DirectoryPanel _folderOne = new DirectoryPanel();
-        private DirectoryPanel _folderTwo = new DirectoryPanel();
-        private Button _runBtn = new Button();
+        private readonly DirectoryPanel _folderOne = new DirectoryPanel();
+        private readonly DirectoryPanel _folderTwo = new DirectoryPanel();
+        private readonly Button _runBtn = new Button();
 
         public MainForm()
         {

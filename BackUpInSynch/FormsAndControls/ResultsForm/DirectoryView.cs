@@ -9,7 +9,7 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
 {
     public class DirectoryView : NodeViewBase
     {
-        private DirectoryResultDetails _directoryResultDetails;
+        private readonly DirectoryResultDetails _directoryResultDetails;
         public event EventHandler PathChosen;
 
 

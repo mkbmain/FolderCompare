@@ -6,11 +6,11 @@ namespace BackUpInSynch.FormsAndControls
 {
     public class DirectoryNodeViewer : Form
     {
-        private DirectoryNode _folderNodeOne;
-        private DirectoryNode _folderNodeTwo;
+        private readonly DirectoryNode _folderNodeOne;
+        private readonly DirectoryNode _folderNodeTwo;
 
-        private TreeView _treeViewFolderOne;
-        private TreeView _treeViewFolderTwo;
+        private readonly TreeView _treeViewFolderOne;
+        private readonly TreeView _treeViewFolderTwo;
 
         public DirectoryNodeViewer(DirectoryNode folderOne, DirectoryNode folderTwo)
         {

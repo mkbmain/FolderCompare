@@ -8,12 +8,12 @@ namespace BackUpInSynch.FormsAndControls.MainForm
     {
         private const int MyHeight = 22;
         
-        private Label _title = new Label {Text = "Open Folder:", AutoSize = false,Size = new Size(77,MyHeight)};
-        private TextBox _pathTxtBox = new TextBox {Multiline = false, AutoSize = false,Size = new Size(280, MyHeight-2), ReadOnly = false};
-        private Button _openButton = new Button {Text = "..",AutoSize = false, Size = new Size(23, MyHeight)};
+        private readonly Label _title = new Label {Text = "Open Folder:", AutoSize = false,Size = new Size(77,MyHeight)};
+        private readonly TextBox _pathTxtBox = new TextBox {Multiline = false, AutoSize = false,Size = new Size(280, MyHeight-2), ReadOnly = false};
+        private readonly Button _openButton = new Button {Text = "..",AutoSize = false, Size = new Size(23, MyHeight)};
 
         public string GetPathIfValid => Directory.Exists(_pathTxtBox.Text) ? _pathTxtBox.Text : null;
-        private FolderBrowserDialog _folderBrowserDialog = new FolderBrowserDialog();
+        private readonly FolderBrowserDialog _folderBrowserDialog = new FolderBrowserDialog();
 
         public DirectoryPanel()
         {

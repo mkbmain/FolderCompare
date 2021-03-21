@@ -17,9 +17,10 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
 
         public ResultsForm(DirectoryNode source, DirectoryNode destination)
         {
+            Text = "Results";
             AutoSize = false;
             Size = new Size(750, 600);
-            Text = "Results";
+ 
             var issue = CalculateDiffrences.Issues(source.BasePath, destination.BasePath, source, destination);
             Directories = issue.DirectoryResultDetailsList;
             Files = issue.FileResultDetailsList;
@@ -29,7 +30,7 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
 
         private void DrawWindow()
         {
-            var location = 0;
+       
             if (_panel != null && Controls.Contains(_panel))
             {
                 Controls.Remove(_panel);
@@ -41,7 +42,8 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
             {
                 _panel.Controls.Remove(item);
             }
-
+            
+            var location = 0;
             foreach (var directoryView in Directories.Select(item => new DirectoryView(item) {Top = location}))
             {
                 directoryView.PathChosen += DirectoryOnPathChosen;
