@@ -26,7 +26,7 @@ namespace BackUpInSynch.Utils
                 {
                     Generate("Copy Me",()=> 
                         FileAndIoUtils.DirectoryCopy(source.FullLocation, Path.Combine(destinationBasePath, source.RelativeLocation), true) ),
-                    Generate("Delete Me",()=>System.IO.Directory.Delete(source.FullLocation))
+                    Generate("Delete Me",()=>Directory.Delete(source.FullLocation))
                 }
             };
         }
@@ -39,7 +39,7 @@ namespace BackUpInSynch.Utils
                 Linked = dest,
                 ActionHandlerWithTexts = dest == null ? new List<ActionHandlerWithText>() : new List<ActionHandlerWithText>
                 {
-                    Generate("OverWriteThem", () => System.IO.File.Copy(source.FullLocation,dest.FullLocation, true))
+                    Generate("OverWriteThem", () => File.Copy(source.FullLocation,dest.FullLocation, true))
                 }
             };
             
@@ -47,9 +47,9 @@ namespace BackUpInSynch.Utils
             item.ActionHandlerWithTexts = item.ActionHandlerWithTexts.Union(new List<ActionHandlerWithText>
             {
                 Generate("Copy Me",
-                    () => System.IO.File.Copy(source.FullLocation,
+                    () => File.Copy(source.FullLocation,
                         Path.Combine(destinationBasePath, source.RelativeLocation), true)),
-                Generate("Delete Me", () => System.IO.File.Delete(source.FullLocation))
+                Generate("Delete Me", () => File.Delete(source.FullLocation))
             });
 
             return item;

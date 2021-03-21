@@ -20,8 +20,8 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
 
         private Panel FilePanel(FileResultDetails node)
         {
-            var panel = new Panel{Width = _size.Width-65,Height = 220};
-            var label = new TextBox()
+            var panel = new Panel{Width = MyDefaultSize.Width-65,Height = 220};
+            var label = new TextBox
             {
                 Text = $"{node.Data.FullLocation} is {GetDescription(node.Linked != null)}",
                 AutoSize = false,
@@ -63,7 +63,7 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
         public FileView(FileResultDetails node)
         {
             _fileResultDetails = node;
-            DrawMe(_size,ResourceUtil.GetImageFromResource("BackUpInSynch.FileIcon.png"), node.Data.Name, "File Is Missing",
+            DrawMe(MyDefaultSize,ResourceUtil.GetImageFromResource("BackUpInSynch.FileIcon.png"), node.Data.Name, "File Is Missing",
                 FilePanel(node)
             );
         }

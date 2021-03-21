@@ -14,11 +14,11 @@ namespace BackUpInSynch.FormsAndControls
 
         public DirectoryNodeViewer(DirectoryNode folderOne, DirectoryNode folderTwo)
         {
-            this.Size = new System.Drawing.Size(800, 450);
-            this.Text = "FolderComparer";
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
-            this.Size = new Size(640, 480);
+            Size = new Size(800, 450);
+            Text = "FolderComparer";
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            Size = new Size(640, 480);
 
             _folderNodeOne = folderOne;
             _folderNodeTwo = folderTwo;
@@ -27,8 +27,8 @@ namespace BackUpInSynch.FormsAndControls
 
             _treeViewFolderOne.Location = new Point(1, 1);
             _treeViewFolderTwo.Location = new Point(_treeViewFolderOne.Right + 15, 1);
-            this.Controls.Add(_treeViewFolderOne);
-            this.Controls.Add(_treeViewFolderTwo);
+            Controls.Add(_treeViewFolderOne);
+            Controls.Add(_treeViewFolderTwo);
         }
     }
 }

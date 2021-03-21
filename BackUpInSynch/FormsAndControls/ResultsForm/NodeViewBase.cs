@@ -1,4 +1,3 @@
-using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -9,18 +8,18 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
         protected ComboBox DropDownBox;
         
 
-        protected Size _size = new Size(700, 56);
+        protected Size MyDefaultSize = new Size(700, 56);
         private Size _withControl;
 
 
         protected void DrawMe(Size size, Image image, string title, string description, Control expandControl)
         {
-            _size = size;
-            this.AutoScroll = false;
-            this.AutoSize = false;
-            this.Size = _size;
-            _withControl = new Size(this.Width, this.Height + expandControl.Height + 10);
-            this.BorderStyle = BorderStyle.FixedSingle;
+            MyDefaultSize = size;
+            AutoScroll = false;
+            AutoSize = false;
+            Size = MyDefaultSize;
+            _withControl = new Size(Width, Height + expandControl.Height + 10);
+            BorderStyle = BorderStyle.FixedSingle;
             var pictureBox = new PictureBox
             {
                 Location = new Point(5, 5),
@@ -41,30 +40,30 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
             var descriptionLabel = new Label
             {
                 Location = new Point(pictureBox.Right + 5, titleLabel.Bottom + 15),
-                Width = this.Width,
+                Width = Width,
                 Text = description,
                 Font = new Font(FontFamily.GenericMonospace, 12, FontStyle.Bold)
             };
             var expander = new Label
             {
                 Text = "+",
-                Location = new Point(this.Width - 25, 15),
+                Location = new Point(Width - 25, 15),
                 Font = new Font(FontFamily.GenericMonospace, 12, FontStyle.Bold)
             };
-            this.Controls.Add(expander);
+            Controls.Add(expander);
             expandControl.Top = pictureBox.Bottom;
             expandControl.Left = 1;
-            this.Controls.Add(pictureBox);
-            this.Controls.Add(titleLabel);
-            this.Controls.Add(descriptionLabel);
-            this.Controls.Add(expandControl);
+            Controls.Add(pictureBox);
+            Controls.Add(titleLabel);
+            Controls.Add(descriptionLabel);
+            Controls.Add(expandControl);
             titleLabel.SendToBack();
 
 
             expander.Click += (sender, args) =>
             {
                 expander.Text = expander.Text == "+" ? "-" : "+";
-                this.Size = (this.Size == _size) ? _withControl : _size;
+                Size = (Size == MyDefaultSize) ? _withControl : MyDefaultSize;
             };
         }
     }

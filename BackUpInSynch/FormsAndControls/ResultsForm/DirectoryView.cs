@@ -9,13 +9,13 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
 {
     public class DirectoryView : NodeViewBase
     {
-        private DirectoryResultDetails DirectoryResultDetails;
+        private DirectoryResultDetails _directoryResultDetails;
         public event EventHandler PathChosen;
 
 
         private Panel DirectoryPanel(DirectoryResultDetails node)
         {
-            var panel = new Panel{Width = _size.Width-65,Height = 220};
+            var panel = new Panel{Width = MyDefaultSize.Width-65,Height = 220};
             var label = new Label {Text = node.Data.FullLocation, AutoSize = true};
             var treeView = new TreeView
                 {Top = label.Bottom + 5, Nodes = {node.Data.ToTreeNode()}, Size = new Size(panel.Width - 90, 200)};
@@ -47,16 +47,16 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
         private void ButtonOnClick(object sender, EventArgs e)
         {
             var item = DropDownBox.SelectedItem.ToString();
-            var action = DirectoryResultDetails.ActionHandlerWithTexts.First(f => f.Text == item);
+            var action = _directoryResultDetails.ActionHandlerWithTexts.First(f => f.Text == item);
             action.Action.Invoke();
-            PathChosen?.Invoke(sender, DirectoryResultDetails);
+            PathChosen?.Invoke(sender, _directoryResultDetails);
         }
 
         public DirectoryView(DirectoryResultDetails node)
         {
-            DrawMe(_size,ResourceUtil.GetImageFromResource("BackUpInSynch.openedfolder.png"), node.Data.Name,
+            DrawMe(MyDefaultSize,ResourceUtil.GetImageFromResource("BackUpInSynch.openedfolder.png"), node.Data.Name,
                 "Directory is missing", DirectoryPanel(node));
-            DirectoryResultDetails = node;
+            _directoryResultDetails = node;
         }
     }
 }

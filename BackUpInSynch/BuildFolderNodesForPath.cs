@@ -1,3 +1,4 @@
+using System.IO;
 using System.Linq;
 using BackUpInSynch.Models.ScanStructure;
 using BackUpInSynch.Utils;
@@ -16,12 +17,12 @@ namespace BackUpInSynch
                 FullLocation = path
             };
 
-            foreach (var item in System.IO.Directory.GetDirectories(path))
+            foreach (var item in Directory.GetDirectories(path))
             {
                 node.SubDirectories.Add(BuildPath(basePath,item));
             }
 
-            foreach (var item in System.IO.Directory.GetFiles(path))
+            foreach (var item in Directory.GetFiles(path))
             {
                 var names = NameCleaner(item);
                 node.Files.Add(new FileNode

@@ -9,45 +9,45 @@ namespace BackUpInSynch.FormsAndControls.MainForm
 {
     public class MainForm : Form
     {
-        private DirectoryPanel FolderOne = new DirectoryPanel();
-        private DirectoryPanel FolderTwo = new DirectoryPanel();
-        private Button RunBtn = new Button();
+        private DirectoryPanel _folderOne = new DirectoryPanel();
+        private DirectoryPanel _folderTwo = new DirectoryPanel();
+        private Button _runBtn = new Button();
 
         public MainForm()
         {
-            this.Controls.Add(RunBtn);
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
-            FolderTwo.Top = FolderOne.Bottom + 5;
-            this.Controls.Add(FolderOne);
-            this.Controls.Add(FolderTwo);
-            RunBtn.Location = new Point(33 + FolderTwo.Bottom, this.Width / 2);
-            this.Width = 640;
-            RunBtn.Click += RunBtn_Click;
+            Controls.Add(_runBtn);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            _folderTwo.Top = _folderOne.Bottom + 5;
+            Controls.Add(_folderOne);
+            Controls.Add(_folderTwo);
+            _runBtn.Location = new Point(33 + _folderTwo.Bottom, Width / 2);
+            Width = 640;
+            _runBtn.Click += RunBtn_Click;
         }
 
 
         private void RunBtn_Click(object sender, EventArgs e)
         {
-            if (RunBtn.Text == "Results")
+            if (_runBtn.Text == "Results")
             {
                 var fc = new ResultsForm.ResultsForm(_folderNodeOne, _folderNodeTwo);
                 fc.Show();
                 return;
             }
 
-            var pathOne = FolderOne.GetPathIfValid;
-            var pathTwo = FolderTwo.GetPathIfValid;
+            var pathOne = _folderOne.GetPathIfValid;
+            var pathTwo = _folderTwo.GetPathIfValid;
             if (pathOne == null || pathTwo == null)
             {
                 MessageBox.Show("Please check paths");
                 return;
             }
 
-            RunBtn.Text = "Results";
-            RunBtn.Enabled = false;
+            _runBtn.Text = "Results";
+            _runBtn.Enabled = false;
 
-            BackgroundGenerator.Run((pathOne, pathTwo), DoWork, (a, b) => { RunBtn.Enabled = true; }, null);
+            BackgroundGenerator.Run((pathOne, pathTwo), DoWork, (a, b) => { _runBtn.Enabled = true; }, null);
         }
 
         private static DirectoryNode _folderNodeOne;

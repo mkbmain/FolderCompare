@@ -11,18 +11,18 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
 {
     public  class ResultsForm : Form
     {
-        private List<DirectoryResultDetails> _directories { get; set; }
-        private List<FileResultDetails> _files { get; set; }
-        private Panel Panel = null;
+        private List<DirectoryResultDetails> Directories { get; set; }
+        private List<FileResultDetails> Files { get; set; }
+        private Panel _panel;
 
         public ResultsForm(DirectoryNode source, DirectoryNode destination)
         {
-            this.AutoSize = false;
-            this.Size = new Size(750, 600);
-            this.Text = "Results";
+            AutoSize = false;
+            Size = new Size(750, 600);
+            Text = "Results";
             var issue = CalculateDiffrences.Issues(source.BasePath, destination.BasePath, source, destination);
-            _directories = issue.DirectoryResultDetailsList;
-            _files = issue.FileResultDetailsList;
+            Directories = issue.DirectoryResultDetailsList;
+            Files = issue.FileResultDetailsList;
             DrawWindow();
         }
 
@@ -30,39 +30,39 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
         private void DrawWindow()
         {
             var location = 0;
-            if (Panel != null && this.Controls.Contains(Panel))
+            if (_panel != null && Controls.Contains(_panel))
             {
-                this.Controls.Remove(Panel);
+                Controls.Remove(_panel);
             }
 
-            Panel = new Panel {Name = "M", Size = new Size(this.Width - 30, this.Height - 50), AutoScroll = true};
+            _panel = new Panel {Name = "M", Size = new Size(Width - 30, Height - 50), AutoScroll = true};
 
-            foreach (var item in Panel.Controls.Cast<Control>())
+            foreach (var item in _panel.Controls.Cast<Control>())
             {
-                Panel.Controls.Remove(item);
+                _panel.Controls.Remove(item);
             }
 
-            foreach (var directoryView in _directories.Select(item => new DirectoryView(item) {Top = location}))
+            foreach (var directoryView in Directories.Select(item => new DirectoryView(item) {Top = location}))
             {
                 directoryView.PathChosen += DirectoryOnPathChosen;
                 location += directoryView.Height + 5;
-                Panel.Controls.Add(directoryView);
+                _panel.Controls.Add(directoryView);
             }
 
-            foreach (var fileView in _files.Select(item => new FileView(item) {Top = location}))
+            foreach (var fileView in Files.Select(item => new FileView(item) {Top = location}))
             {
                 fileView.PathChosen += FileOnPathChosen;
                 location += fileView.Height + 5;
-                Panel.Controls.Add(fileView);
+                _panel.Controls.Add(fileView);
             }
 
-            this.Controls.Add(Panel);
+            Controls.Add(_panel);
         }
 
         private void DirectoryOnPathChosen(object sender, EventArgs e)
         {
             var item = e as DirectoryResultDetails;
-            _directories = _directories.Where(f => f.Data.Id != item.Data.Id)
+            Directories = Directories.Where(f => f.Data.Id != item.Data.Id)
                 .Where(f => f.Linked == null || f.Linked.Id != item.Data.Id).ToList();
             DrawWindow();
         }
@@ -70,7 +70,7 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
         private void FileOnPathChosen(object sender, EventArgs e)
         {
             var item = e as FileResultDetails;
-            _files = _files.Where(f => f.Data.Id != item.Data.Id)
+            Files = Files.Where(f => f.Data.Id != item.Data.Id)
                 .Where(f => f.Linked == null || f.Linked.Id != item.Data.Id).ToList();
             DrawWindow();
         }
