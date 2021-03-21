@@ -27,27 +27,26 @@ namespace BackUpInSynch.CalculateMissMatches
             {
                 output.DirectoryResultDetailsList.Add(
                     ResultActionGenerator.FolderGenerator(source, destinationBasePath));
+                return output;
             }
 
-            else if (source == null)
+            if (source == null)
             {
                 var result = ResultActionGenerator.FolderGenerator(dest, sourceBasePath);
                 // we flip them as this is the destination the bottom option is recommended
                 result.ActionHandlerWithTexts = result.ActionHandlerWithTexts.Reverse();
                 output.DirectoryResultDetailsList.Add(result);
+                return output;
             }
 
-            else
-            {
-                var items = SortDirectories(sourceBasePath, destinationBasePath, source, dest);
-                output.DirectoryResultDetailsList.AddRange(items.DirectoryResultDetailsList);
-                output.FileResultDetailsList.AddRange(items.FileResultDetailsList);
+            var items = SortDirectories(sourceBasePath, destinationBasePath, source, dest);
+            output.DirectoryResultDetailsList.AddRange(items.DirectoryResultDetailsList);
+            output.FileResultDetailsList.AddRange(items.FileResultDetailsList);
 
-                // i know this looks like a duplicate but the names being parsed in on last arg switches logic inside method 
-                items = SortDirectories(sourceBasePath, destinationBasePath, source, dest, items.NamesMatched);
-                output.DirectoryResultDetailsList.AddRange(items.DirectoryResultDetailsList);
-                output.FileResultDetailsList.AddRange(items.FileResultDetailsList);
-            }
+            // i know this looks like a duplicate but the names being parsed in on last arg switches logic inside method 
+            items = SortDirectories(sourceBasePath, destinationBasePath, source, dest, items.NamesMatched);
+            output.DirectoryResultDetailsList.AddRange(items.DirectoryResultDetailsList);
+            output.FileResultDetailsList.AddRange(items.FileResultDetailsList);
 
             output.FileResultDetailsList.AddRange(ManageFiles(sourceBasePath, destinationBasePath, source, dest));
             return output;
@@ -74,7 +73,8 @@ namespace BackUpInSynch.CalculateMissMatches
 
             var result = SortFiles(sourceBasePath, destinationBasePath, source, dest);
             var list = result.FileResultDetailsList;
-            list.AddRange(SortFiles(sourceBasePath,destinationBasePath,source,dest,result.NamesMatched).FileResultDetailsList);
+            list.AddRange(SortFiles(sourceBasePath, destinationBasePath, source, dest, result.NamesMatched)
+                .FileResultDetailsList);
             return list;
         }
 
@@ -92,7 +92,9 @@ namespace BackUpInSynch.CalculateMissMatches
                 {
                     continue;
                 }
-                items.FileResultDetailsList.Add(ResultActionGenerator.FileGenertor(file, destFile,checkFiles == null? destinationBasePath : sourceBasePath));
+
+                items.FileResultDetailsList.Add(ResultActionGenerator.FileGenertor(file, destFile,
+                    checkFiles == null ? destinationBasePath : sourceBasePath));
             }
 
             return items;

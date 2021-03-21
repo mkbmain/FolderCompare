@@ -12,7 +12,7 @@ namespace BackUpInSynch
             var node = new DirectoryNode
             {
                 Name = name, 
-                
+                BasePath = basePath,
                 FullLocation = path
             };
 
@@ -27,6 +27,7 @@ namespace BackUpInSynch
                 node.Files.Add(new FileNode
                 {
                     Name = names, 
+                    BasePath = basePath,
                     FullLocation = item,
                     Hash = calcHash ? FileAndIoUtils.CalculateMd5(item) : string.Empty
                 });
