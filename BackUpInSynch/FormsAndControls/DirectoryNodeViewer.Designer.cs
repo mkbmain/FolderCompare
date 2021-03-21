@@ -1,8 +1,8 @@
 using System.ComponentModel;
 
-namespace BackUpInSynch
+namespace BackUpInSynch.FormsAndControls
 {
-    partial class FolderComparer
+    partial class DirectoryNodeViewer
     {
         /// <summary>
         /// Required designer variable.

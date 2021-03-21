@@ -12,9 +12,22 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="FormsAndControls\FolderComparer.cs">
+      <Compile Update="FormsAndControls\DirectoryNodeViewer.cs">
         <SubType>Form</SubType>
       </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="folder.svg" />
+      <None Remove="folder-documents.svg" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="FileIcon.png" />
+      <EmbeddedResource Include="FileIcon.png" />
+      <None Remove="FolderIcon.png" />
+      <None Remove="opened-folder.png" />
+      <EmbeddedResource Include="openedfolder.png" />
     </ItemGroup>
 
 </Project>

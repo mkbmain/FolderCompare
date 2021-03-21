@@ -2,9 +2,9 @@ using System.Drawing;
 using System.Windows.Forms;
 using BackUpInSynch.DirectoryStructure;
 
-namespace BackUpInSynch
+namespace BackUpInSynch.FormsAndControls
 {
-    public partial class FolderComparer : Form
+    public partial class DirectoryNodeViewer : Form
     {
         private DirectoryNode _folderNodeOne;
         private DirectoryNode _folderNodeTwo;
@@ -12,7 +12,7 @@ namespace BackUpInSynch
         private TreeView _treeViewFolderOne ;
         private TreeView _treeViewFolderTwo;
         
-        public FolderComparer(DirectoryNode folderOne, DirectoryNode folderTwo)
+        public DirectoryNodeViewer(DirectoryNode folderOne, DirectoryNode folderTwo)
         {
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.FixedSingle;

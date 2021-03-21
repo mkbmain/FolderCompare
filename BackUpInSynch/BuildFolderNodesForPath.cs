@@ -21,7 +21,7 @@ namespace BackUpInSynch
             foreach (var item in System.IO.Directory.GetFiles(path))
             {
                 var names = NameCleaner(item);
-                node.Files.Add(new FileNode{ Name = names, FullLocation = item, Hash = calcHash ? FileHelper.CalculateMD5(item) :null});
+                node.Files.Add(new FileNode{ Name = names, FullLocation = item, Hash = calcHash ? FileHelper.CalculateMd5(item) :null});
             }
 
             return node;
@@ -29,8 +29,7 @@ namespace BackUpInSynch
 
         private static string NameCleaner(string path)
         {
-            var s = path.Split(FileHelper.DirectorySeparatorStr);
-            return s.Last();
+            return path.Split(FileHelper.DirectorySeparatorStr).Last();
         }
     }
 }

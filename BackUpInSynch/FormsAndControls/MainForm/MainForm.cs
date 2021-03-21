@@ -4,15 +4,15 @@ using System.Drawing;
 using System.Windows.Forms;
 using BackUpInSynch.DirectoryStructure;
 
-namespace BackUpInSynch
+namespace BackUpInSynch.FormsAndControls.MainForm
 {
-    public partial class Form1 : Form
+    public class MainForm : Form
     {
         private DirectoryPanel FolderOne = new DirectoryPanel();
         private DirectoryPanel FolderTwo = new DirectoryPanel();
         private Button RunBtn = new Button();
 
-        public Form1()
+        public MainForm()
         {
             this.Controls.Add(RunBtn);
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -23,6 +23,8 @@ namespace BackUpInSynch
             RunBtn.Location  = new Point(33 + FolderTwo.Bottom, this.Width / 2);
             this.Width = 640;
             RunBtn.Click += RunBtn_Click;
+            var r = new ResultsForm.ResultsForm(new FileNode[0], new DirectoryNode[0], new FileNode[0]);
+            r.Show();
         }
 
 
@@ -30,7 +32,7 @@ namespace BackUpInSynch
         {
             if (RunBtn.Text == "Results")
             {
-                var fc = new FolderComparer(_folderNodeOne, _folderNodeTwo);
+                var fc = new DirectoryNodeViewer(_folderNodeOne, _folderNodeTwo);
                 fc.Show();
                 return;
             }

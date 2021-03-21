@@ -7,13 +7,13 @@ namespace BackUpInSynch
 {
     public static class FileHelper
     {
-        private static char? _DirectorySeparatorStr = null;
+        private static char? _directorySeparatorStr;
 
-        public static char DirectorySeparatorStr => _DirectorySeparatorStr ??
-                                                    (_DirectorySeparatorStr = Path.Combine("aa", "aa").Replace("aa", "")
+        public static char DirectorySeparatorStr => _directorySeparatorStr ??
+                                                    (_directorySeparatorStr = Path.Combine("aa", "aa").Replace("aa", "")
                                                         .First()).Value;
 
-        public static string CalculateMD5(string filename)
+        public static string CalculateMd5(string filename)
         {
             using (var md5 = MD5.Create())
             {

@@ -1,10 +1,9 @@
 using System.Drawing;
-using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
 
-namespace BackUpInSynch
+namespace BackUpInSynch.FormsAndControls.MainForm
 {
-    public class DirectoryPanel : System.Windows.Forms.Panel
+    public class DirectoryPanel : Panel
     {
         private const int Height = 22;
         
