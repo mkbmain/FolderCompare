@@ -12,16 +12,21 @@ namespace BackUpInSynch
 {
     public partial class Form1 : Form
     {
-        private DirectoryPanel FolderOne = new();
-        private DirectoryPanel FolderTwo = new();
+        private DirectoryPanel FolderOne = new DirectoryPanel();
+        private DirectoryPanel FolderTwo = new DirectoryPanel();
+        private Button RunBtn = new Button();
+
         public Form1()
         {
-            InitializeComponent();
+            this.Controls.Add(RunBtn);
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             FolderTwo.Top = FolderOne.Bottom + 5;
             this.Controls.Add(FolderOne);
             this.Controls.Add(FolderTwo);
+            RunBtn.Location  = new Point(33 + FolderTwo.Bottom, this.Width / 2);
+            this.Width = 640;
+            RunBtn.Click += RunBtn_Click;
         }
 
 
@@ -33,6 +38,7 @@ namespace BackUpInSynch
                 fc.Show();
                 return;
             }
+
             var pathOne = FolderOne.GetPathIfValid;
             var pathTwo = FolderTwo.GetPathIfValid;
             if (pathOne == null || pathTwo == null)
@@ -43,21 +49,19 @@ namespace BackUpInSynch
 
             RunBtn.Text = "Results";
             RunBtn.Enabled = false;
-            
-            RunInBackground.Run((pathOne,pathTwo), DoWork, (_, _) =>
-            {
-                RunBtn.Enabled = true;
-            }, null);
+
+            RunInBackground.Run((pathOne, pathTwo), DoWork, (a, b) => { RunBtn.Enabled = true; }, null);
         }
 
         private static FolderNode _folderNodeOne;
         private FolderNode _folderNodeTwo;
+
         private void DoWork(object o, DoWorkEventArgs args)
         {
-            var (pathOne, pathTwo) = (ValueTuple< string,string>)args.Argument;
+            var (pathOne, pathTwo) = (ValueTuple<string, string>) args.Argument;
             _folderNodeOne = BuildFolderNodesForPath.BuildPath(pathOne);
-            _folderNodeTwo  = BuildFolderNodesForPath.BuildPath(pathTwo);
-            MessageBox.Show("Results available"); 
+            _folderNodeTwo = BuildFolderNodesForPath.BuildPath(pathTwo);
+            MessageBox.Show("Results available");
         }
     }
 }

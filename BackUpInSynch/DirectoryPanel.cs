@@ -9,7 +9,7 @@ namespace BackUpInSynch
         private const int Height = 22;
         
         private Label Title = new Label {Text = "Open Folder:", AutoSize = false,Size = new Size(77,Height)};
-        private TextBox PathTxtBox = new TextBox {Multiline = false, AutoSize = false,Size = new Size(280, Height-2), ReadOnly = true};
+        private TextBox PathTxtBox = new TextBox {Multiline = false, AutoSize = false,Size = new Size(280, Height-2), ReadOnly = false};
         private Button OpenButton = new Button {Text = "..",AutoSize = false, Size = new Size(23, Height)};
 
         public string GetPathIfValid => System.IO.Directory.Exists(PathTxtBox.Text) ? PathTxtBox.Text : null;
