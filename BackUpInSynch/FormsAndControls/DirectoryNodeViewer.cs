@@ -6,12 +6,6 @@ namespace BackUpInSynch.FormsAndControls
 {
     public class DirectoryNodeViewer : Form
     {
-        private readonly DirectoryNode _folderNodeOne;
-        private readonly DirectoryNode _folderNodeTwo;
-
-        private readonly TreeView _treeViewFolderOne;
-        private readonly TreeView _treeViewFolderTwo;
-
         public DirectoryNodeViewer(DirectoryNode folderOne, DirectoryNode folderTwo)
         {
             Size = new Size(800, 450);
@@ -20,15 +14,13 @@ namespace BackUpInSynch.FormsAndControls
             MaximizeBox = false;
             Size = new Size(640, 480);
 
-            _folderNodeOne = folderOne;
-            _folderNodeTwo = folderTwo;
-            _treeViewFolderOne = new TreeView {Nodes = {_folderNodeOne.ToTreeNode()}, Size = new Size(300, 350)};
-            _treeViewFolderTwo = new TreeView {Nodes = {_folderNodeTwo.ToTreeNode()}, Size = new Size(300, 350)};
+            var treeViewFolderOne = new TreeView {Nodes = {folderOne.ToTreeNode()}, Size = new Size(300, 350)};
+            var treeViewFolderTwo = new TreeView {Nodes = {folderTwo.ToTreeNode()}, Size = new Size(300, 350)};
 
-            _treeViewFolderOne.Location = new Point(1, 1);
-            _treeViewFolderTwo.Location = new Point(_treeViewFolderOne.Right + 15, 1);
-            Controls.Add(_treeViewFolderOne);
-            Controls.Add(_treeViewFolderTwo);
+            treeViewFolderOne.Location = new Point(1, 1);
+            treeViewFolderTwo.Location = new Point(treeViewFolderOne.Right + 15, 1);
+            Controls.Add(treeViewFolderOne);
+            Controls.Add(treeViewFolderTwo);
         }
     }
 }

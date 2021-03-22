@@ -1,10 +1,13 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace BackUpInSynch.Models.ScanStructure
 {
     public class DirectoryNode : NodeBase
     {
+        public List<FileNode> Files { get; }
+        public List<DirectoryNode> SubDirectories { get; }
         public DirectoryNode()
         {
             Files = new List<FileNode>();
@@ -14,20 +17,9 @@ namespace BackUpInSynch.Models.ScanStructure
         public TreeNode ToTreeNode()
         {
             var node = new TreeNode();
-            foreach (var directory in SubDirectories)
-            {
-                node.Nodes.Add(directory.ToTreeNode());
-            }
-
-            foreach (var file in Files)
-            {
-                node.Nodes.Add(file.ToTreeNode());
-            }
-
+            node.Nodes.AddRange(SubDirectories.Select(f => f.ToTreeNode()).ToArray());
+            node.Nodes.AddRange(Files.Select(f => f.ToTreeNode()).ToArray());
             return node;
         }
-
-        public List<FileNode> Files { get; set; }
-        public List<DirectoryNode> SubDirectories { get; set; }
     }
 }
