@@ -7,3 +7,8 @@ this was made in order to ensure my backup drive and its reduency plan another b
 
 
 todo will move the file copy and directory copy to a background task so does not lock up the main thread.
+
+
+
+## Please note
+this was done in this version so it was compatible with mono as all \ majority of the development for this was done on linux meaning visual studio designer for forms will probably not work as all forms and controls where done by hand.
