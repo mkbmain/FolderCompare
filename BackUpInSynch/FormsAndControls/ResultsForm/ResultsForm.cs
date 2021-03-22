@@ -42,8 +42,9 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
             }
 
             var location = 0;
-            foreach (var directoryView in Directories.Select(item => new DirectoryView(item) {Top = location}))
+            foreach (var item in Directories)
             {
+                var directoryView = new DirectoryView(item) {Top = location};
                 directoryView.PathChosen += DirectoryOnPathChosen;
                 location += directoryView.Height + 5;
                 _panel.Controls.Add(directoryView);
