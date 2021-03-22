@@ -12,3 +12,5 @@ todo will move the file copy and directory copy to a background task so does not
 
 ## Please note
 this was done in this version of .net so it was compatible with mono as all \ majority of the development for this was done on linux meaning visual studio designer for forms will probably not work as all forms and controls where done by hand.
+
+also I have seen there are a few things that don't look right on .net on windows but this does look ok on mono on linux so will fix later but functality does appear to work on windows aswell
