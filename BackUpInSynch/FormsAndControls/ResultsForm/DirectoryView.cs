@@ -61,7 +61,8 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
         public DirectoryView(DirectoryResultDetails node)
         {
             DrawMe(MyDefaultSize, ResourceUtil.GetImageFromResource("BackUpInSynch.openedfolder.png"), node.Data.Name,
-                $"Directory is missing {(node.Source ? "in Destination" : "in source")}", DirectoryPanel(node), node.Source);
+                $"Directory is missing {(node.Source ? "in Destination" : "in source")}", DirectoryPanel(node),
+                node.Source);
             _directoryResultDetails = node;
         }
     }

@@ -15,10 +15,10 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
         protected Color GetColor(bool source)
         {
             return source ? Color.LimeGreen : Color.Maroon;
-            
         }
 
-        protected void DrawMe(Size size, Image image, string title, string description, Control expandControl, bool source)
+        protected void DrawMe(Size size, Image image, string title, string description, Control expandControl,
+            bool source)
         {
             MyDefaultSize = size;
             AutoScroll = false;

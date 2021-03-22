@@ -8,7 +8,7 @@ using BackUpInSynch.Models.ResultStructure;
 
 namespace BackUpInSynch.FormsAndControls.ResultsForm
 {
-    public  class ResultsForm : Form
+    public class ResultsForm : Form
     {
         private List<DirectoryResultDetails> Directories { get; set; }
         private List<FileResultDetails> Files { get; set; }
@@ -20,7 +20,7 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
             Text = "Results";
             AutoSize = false;
             Size = new Size(750, 600);
-            
+
             Directories = issue.DirectoryResultDetailsList;
             Files = issue.FileResultDetailsList;
             DrawWindow();
@@ -29,7 +29,6 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
 
         private void DrawWindow()
         {
-       
             if (_panel != null && Controls.Contains(_panel))
             {
                 Controls.Remove(_panel);
@@ -41,7 +40,7 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
             {
                 _panel.Controls.Remove(item);
             }
-            
+
             var location = 0;
             foreach (var directoryView in Directories.Select(item => new DirectoryView(item) {Top = location}))
             {

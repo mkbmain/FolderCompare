@@ -26,7 +26,7 @@ namespace BackUpInSynch.Utils
                 Data = source,
                 ActionHandlerWithTexts = new List<ActionHandlerWithText>
                 {
-                    Generate("Copy Me", () => FileAndIoUtils.DirectoryCopy(source.FullLocation,copyPath)),
+                    Generate("Copy Me", () => FileAndIoUtils.DirectoryCopy(source.FullLocation, copyPath)),
                     Generate("Delete Me", () => Directory.Delete(source.FullLocation))
                 }
             };

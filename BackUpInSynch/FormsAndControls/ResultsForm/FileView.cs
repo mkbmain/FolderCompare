@@ -69,7 +69,7 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
         {
             _fileResultDetails = node;
             DrawMe(MyDefaultSize, ResourceUtil.GetImageFromResource("BackUpInSynch.FileIcon.png"), node.Data.Name,
-                $"File Is {(node.Linked !=null ? "different" : "missing")} in {(node.Source ? "destination" : "source")}",
+                $"File Is {(node.Linked != null ? "different" : "missing")} in {(node.Source ? "destination" : "source")}",
                 FilePanel(node), node.Source
             );
         }

@@ -8,6 +8,7 @@ namespace BackUpInSynch.Models.ScanStructure
     {
         public List<FileNode> Files { get; }
         public List<DirectoryNode> SubDirectories { get; }
+
         public DirectoryNode()
         {
             Files = new List<FileNode>();

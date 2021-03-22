@@ -93,11 +93,13 @@ namespace BackUpInSynch.CalculateMissMatches
                     continue;
                 }
 
-                var item = ResultActionGenerator.FileGenertor(file, destFile, namesDone == null ? destinationBasePath : sourceBasePath);
+                var item = ResultActionGenerator.FileGenertor(file, destFile,
+                    namesDone == null ? destinationBasePath : sourceBasePath);
                 if (namesDone != null)
                 {
                     item.Source = false;
                 }
+
                 items.FileResultDetailsList.Add(item);
             }
 

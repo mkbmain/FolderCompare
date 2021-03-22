@@ -7,9 +7,8 @@ namespace BackUpInSynch.Models.ResultCalcModels
         public MatchIssue()
         {
             NamesMatched = new Dictionary<string, bool>();
-            
         }
+
         public Dictionary<string, bool> NamesMatched { get; set; }
     }
-    
 }

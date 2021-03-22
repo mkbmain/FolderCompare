@@ -10,6 +10,7 @@ namespace BackUpInSynch.Models.ResultCalcModels
             DirectoryResultDetailsList = new List<DirectoryResultDetails>();
             FileResultDetailsList = new List<FileResultDetails>();
         }
+
         public List<DirectoryResultDetails> DirectoryResultDetailsList { get; set; }
         public List<FileResultDetails> FileResultDetailsList { get; set; }
     }

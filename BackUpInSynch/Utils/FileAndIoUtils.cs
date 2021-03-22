@@ -10,8 +10,8 @@ namespace BackUpInSynch.Utils
         private static char? _directorySeparatorStr;
 
         public static char DirectorySeparator => _directorySeparatorStr ??
-                                                    (_directorySeparatorStr = Path.Combine("4", "4").Replace("4", "")
-                                                        .First()).Value;
+                                                 (_directorySeparatorStr = Path.Combine("4", "4").Replace("4", "")
+                                                     .First()).Value;
 
         public static string CalculateMd5(string filename)
         {
@@ -24,7 +24,7 @@ namespace BackUpInSynch.Utils
                 }
             }
         }
-        
+
         public static void DirectoryCopy(string sourceDirName, string destDirName)
         {
             // Get the subdirectories for the specified directory.
@@ -41,13 +41,14 @@ namespace BackUpInSynch.Utils
 
             // If the destination directory doesn't exist, create it.       
             Directory.CreateDirectory(destDirName);
-            
+
             var files = dir.GetFiles();
             foreach (FileInfo file in files)
             {
                 string tempPath = Path.Combine(destDirName, file.Name);
                 file.CopyTo(tempPath, false);
             }
+
             foreach (DirectoryInfo subdir in dirs)
             {
                 string tempPath = Path.Combine(destDirName, subdir.Name);

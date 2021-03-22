@@ -8,14 +8,20 @@ namespace BackUpInSynch.FormsAndControls.MainForm
     internal class DirectoryPanel : Panel
     {
         private const int MyHeight = 22;
-        
-        private readonly Label _title = new Label {Text = "Open Folder:", AutoSize = false,Size = new Size(77,MyHeight)};
-        private readonly TextBox _pathTxtBox = new TextBox {Multiline = false, AutoSize = false,Size = new Size(280, MyHeight-2), ReadOnly = false};
-        private readonly Button _openButton = new Button {Text = "..",AutoSize = false, Size = new Size(23, MyHeight)};
 
-        public string GetPathIfValid => Directory.Exists(_pathTxtBox.Text) ? _pathTxtBox.Text.EndsWith(FileAndIoUtils.DirectorySeparator.ToString()) ?  _pathTxtBox.Text :
+        private readonly Label _title = new Label
+            {Text = "Open Folder:", AutoSize = false, Size = new Size(77, MyHeight)};
+
+        private readonly TextBox _pathTxtBox = new TextBox
+            {Multiline = false, AutoSize = false, Size = new Size(280, MyHeight - 2), ReadOnly = false};
+
+        private readonly Button _openButton = new Button {Text = "..", AutoSize = false, Size = new Size(23, MyHeight)};
+
+        public string GetPathIfValid => Directory.Exists(_pathTxtBox.Text)
+            ? _pathTxtBox.Text.EndsWith(FileAndIoUtils.DirectorySeparator.ToString()) ? _pathTxtBox.Text :
             $"{_pathTxtBox.Text}{FileAndIoUtils.DirectorySeparator}"
             : null;
+
         private readonly FolderBrowserDialog _folderBrowserDialog = new FolderBrowserDialog();
 
         public DirectoryPanel()
@@ -32,7 +38,7 @@ namespace BackUpInSynch.FormsAndControls.MainForm
                     _pathTxtBox.Text = _folderBrowserDialog.SelectedPath;
                 }
             };
-            
+
             Controls.Add(_title);
             Controls.Add(_pathTxtBox);
             Controls.Add(_openButton);
