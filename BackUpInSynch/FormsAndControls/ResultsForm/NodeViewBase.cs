@@ -28,11 +28,11 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
             BorderStyle = BorderStyle.FixedSingle;
             var pictureBox = new PictureBox
             {
-                Location = new Point(5, 5),
+                Location = new Point(3, 3),
                 BorderStyle = BorderStyle.FixedSingle,
                 Image = image,
                 SizeMode = PictureBoxSizeMode.StretchImage,
-                Size = new Size(50, 50)
+                Size = new Size(48, 48)
             };
 
             var titleLabel = new Label

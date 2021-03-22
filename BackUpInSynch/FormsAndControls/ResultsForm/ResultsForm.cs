@@ -34,7 +34,8 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
                 Controls.Remove(_panel);
             }
 
-            _panel = new Panel {Name = "M", Size = new Size(Width - 30, Height - 50), AutoScroll = true};
+            _panel = new Panel
+                {Location = new Point(15, 15), Name = "M", Size = new Size(Width - 30, Height - 50), AutoScroll = true};
 
             foreach (var item in _panel.Controls.Cast<Control>())
             {
