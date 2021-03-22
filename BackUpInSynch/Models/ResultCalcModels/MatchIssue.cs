@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace BackUpInSynch.Models.ResultCalcModels
 {
-    public class MatchIssue : Issues
+    internal class MatchIssue : Issues
     {
         public MatchIssue()
         {

@@ -50,19 +50,12 @@ namespace BackUpInSynch.FormsAndControls.MainForm
             BackgroundGenerator.Run(new BackgroundWorkerInfo{PathOne = pathOne,PathTwo = pathTwo,CheckContents = _checkBox.Checked}, DoWork, (a, b) =>
             {
                 _runBtn.Enabled = true;
-                var issues = CalculateDiffrences.Issues(_folderNodeOne.BasePath, _folderNodeTwo.BasePath,
+                var issues = CalculateDifferences.Issues(_folderNodeOne.BasePath, _folderNodeTwo.BasePath,
                     _folderNodeOne, _folderNodeTwo);
                 var fc = new ResultsForm.ResultsForm(issues);
                 fc.Show();
                 _runBtn.Text = "Calculate";
             }, null);
-        }
-        
-        private class BackgroundWorkerInfo
-        {
-            public string PathOne { get; set; }
-            public string PathTwo { get; set; }
-            public bool CheckContents { get; set; }
         }
 
         private DirectoryNode _folderNodeOne;

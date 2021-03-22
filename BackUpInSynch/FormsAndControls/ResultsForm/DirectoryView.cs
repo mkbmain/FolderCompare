@@ -7,7 +7,7 @@ using BackUpInSynch.Utils;
 
 namespace BackUpInSynch.FormsAndControls.ResultsForm
 {
-    public class DirectoryView : NodeViewBase
+    internal class DirectoryView : NodeViewBase
     {
         private readonly DirectoryResultDetails _directoryResultDetails;
         public event EventHandler PathChosen;

@@ -5,7 +5,7 @@ using BackUpInSynch.Utils;
 
 namespace BackUpInSynch.FormsAndControls.MainForm
 {
-    public class DirectoryPanel : Panel
+    internal class DirectoryPanel : Panel
     {
         private const int MyHeight = 22;
         

@@ -7,7 +7,7 @@ using BackUpInSynch.Utils;
 
 namespace BackUpInSynch.CalculateMissMatches
 {
-    public class CalculateDiffrences
+    internal static class CalculateDifferences
     {
         public static Issues Issues(string sourceBasePath, string destinationBasePath, DirectoryNode source,
             DirectoryNode dest)

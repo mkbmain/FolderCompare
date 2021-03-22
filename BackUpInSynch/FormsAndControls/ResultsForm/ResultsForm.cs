@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using BackUpInSynch.CalculateMissMatches;
 using BackUpInSynch.Models.ResultCalcModels;
 using BackUpInSynch.Models.ResultStructure;
-using BackUpInSynch.Models.ScanStructure;
 
 namespace BackUpInSynch.FormsAndControls.ResultsForm
 {

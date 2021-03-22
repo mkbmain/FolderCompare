@@ -12,12 +12,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="FormsAndControls\DirectoryNodeViewer.cs">
-        <SubType>Form</SubType>
-      </Compile>
-    </ItemGroup>
-
-    <ItemGroup>
       <None Remove="folder.svg" />
       <None Remove="folder-documents.svg" />
     </ItemGroup>

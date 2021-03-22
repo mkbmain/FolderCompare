@@ -5,7 +5,7 @@ using BackUpInSynch.Utils;
 
 namespace BackUpInSynch
 {
-    public static class BuildFolderNodesForPath
+    internal static class BuildFolderNodesForPath
     {
         public static DirectoryNode BuildPath(string basePath ,string path, bool calcHash = false)
         {

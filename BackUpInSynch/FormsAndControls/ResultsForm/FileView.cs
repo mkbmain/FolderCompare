@@ -7,7 +7,7 @@ using BackUpInSynch.Utils;
 
 namespace BackUpInSynch.FormsAndControls.ResultsForm
 {
-    public class FileView : NodeViewBase
+    internal class FileView : NodeViewBase
     {
         private readonly FileResultDetails _fileResultDetails;
         public event EventHandler PathChosen;

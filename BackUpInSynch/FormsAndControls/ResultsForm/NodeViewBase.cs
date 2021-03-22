@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace BackUpInSynch.FormsAndControls.ResultsForm
 {
-    public abstract class NodeViewBase : Panel
+    internal abstract class NodeViewBase : Panel
     {
         protected ComboBox DropDownBox;
 
