@@ -17,38 +17,50 @@ namespace BackUpInSynch.Utils
                 Action = action
             };
         }
+
         public static DirectoryResultDetails FolderGenerator(DirectoryNode source, string destinationBasePath)
         {
+            var copyPath = Path.Combine(destinationBasePath, source.RelativeLocation);
             return new DirectoryResultDetails
             {
                 Data = source,
                 ActionHandlerWithTexts = new List<ActionHandlerWithText>
                 {
-                    Generate("Copy Me",()=> 
-                        FileAndIoUtils.DirectoryCopy(source.FullLocation, Path.Combine(destinationBasePath, source.RelativeLocation), true) ),
-                    Generate("Delete Me",()=>Directory.Delete(source.FullLocation))
+                    Generate("Copy Me", () => FileAndIoUtils.DirectoryCopy(source.FullLocation,copyPath)),
+                    Generate("Delete Me", () => Directory.Delete(source.FullLocation))
                 }
             };
         }
-        
-        public static FileResultDetails FileGenertor(FileNode source,FileNode dest , string destinationBasePath)
+
+        public static FileResultDetails FileGenertor(FileNode source, FileNode dest, string destinationBasePath)
         {
             var item = new FileResultDetails
             {
                 Data = source,
                 Linked = dest,
-                ActionHandlerWithTexts = dest == null ? new List<ActionHandlerWithText>() : new List<ActionHandlerWithText>
-                {
-                    Generate("OverWriteThem", () => File.Copy(source.FullLocation,dest.FullLocation, true))
-                }
+                ActionHandlerWithTexts = dest == null
+                    ? new List<ActionHandlerWithText>()
+                    : new List<ActionHandlerWithText>
+                    {
+                        Generate("OverWriteThem", () => File.Copy(source.FullLocation, dest.FullLocation, true))
+                    }
             };
-            
+
 
             item.ActionHandlerWithTexts = item.ActionHandlerWithTexts.Union(new List<ActionHandlerWithText>
             {
                 Generate("Copy Me",
-                    () => File.Copy(source.FullLocation,
-                        Path.Combine(destinationBasePath, source.RelativeLocation), true)),
+                    () =>
+                    {
+                        var locationForNewFile = Path.Combine(destinationBasePath, source.RelativeLocation);
+                        var directory = locationForNewFile.Substring(0, locationForNewFile.Length - source.Name.Length);
+                        if (!Directory.Exists(directory))
+                        {
+                            Directory.CreateDirectory(directory);
+                        }
+
+                        File.Copy(source.FullLocation, locationForNewFile, true);
+                    }),
                 Generate("Delete Me", () => File.Delete(source.FullLocation))
             });
 

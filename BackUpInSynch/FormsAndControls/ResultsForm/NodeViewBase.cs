@@ -6,13 +6,19 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
     public abstract class NodeViewBase : Panel
     {
         protected ComboBox DropDownBox;
-        
+
 
         protected Size MyDefaultSize = new Size(700, 56);
         private Size _withControl;
 
 
-        protected void DrawMe(Size size, Image image, string title, string description, Control expandControl)
+        protected Color GetColor(bool source)
+        {
+            return source ? Color.LimeGreen : Color.Maroon;
+            
+        }
+
+        protected void DrawMe(Size size, Image image, string title, string description, Control expandControl, bool source)
         {
             MyDefaultSize = size;
             AutoScroll = false;
@@ -59,7 +65,7 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
             Controls.Add(expandControl);
             titleLabel.SendToBack();
 
-
+            BackColor = GetColor(source);
             expander.Click += (sender, args) =>
             {
                 expander.Text = expander.Text == "+" ? "-" : "+";

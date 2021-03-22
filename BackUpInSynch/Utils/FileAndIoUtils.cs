@@ -9,8 +9,8 @@ namespace BackUpInSynch.Utils
     {
         private static char? _directorySeparatorStr;
 
-        public static char DirectorySeparatorStr => _directorySeparatorStr ??
-                                                    (_directorySeparatorStr = Path.Combine("aa", "aa").Replace("aa", "")
+        public static char DirectorySeparator => _directorySeparatorStr ??
+                                                    (_directorySeparatorStr = Path.Combine("4", "4").Replace("4", "")
                                                         .First()).Value;
 
         public static string CalculateMd5(string filename)
@@ -25,7 +25,7 @@ namespace BackUpInSynch.Utils
             }
         }
         
-        public static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
+        public static void DirectoryCopy(string sourceDirName, string destDirName)
         {
             // Get the subdirectories for the specified directory.
             var dir = new DirectoryInfo(sourceDirName);
@@ -41,23 +41,17 @@ namespace BackUpInSynch.Utils
 
             // If the destination directory doesn't exist, create it.       
             Directory.CreateDirectory(destDirName);
-
-            // Get the files in the directory and copy them to the new location.
+            
             var files = dir.GetFiles();
             foreach (FileInfo file in files)
             {
                 string tempPath = Path.Combine(destDirName, file.Name);
                 file.CopyTo(tempPath, false);
             }
-
-            // If copying subdirectories, copy them and their contents to new location.
-            if (copySubDirs)
+            foreach (DirectoryInfo subdir in dirs)
             {
-                foreach (DirectoryInfo subdir in dirs)
-                {
-                    string tempPath = Path.Combine(destDirName, subdir.Name);
-                    DirectoryCopy(subdir.FullName, tempPath, copySubDirs);
-                }
+                string tempPath = Path.Combine(destDirName, subdir.Name);
+                DirectoryCopy(subdir.FullName, tempPath);
             }
         }
     }

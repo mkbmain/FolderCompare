@@ -79,13 +79,13 @@ namespace BackUpInSynch.CalculateMissMatches
         }
 
         private static MatchIssue SortFiles(string sourceBasePath, string destinationBasePath,
-            DirectoryNode source, DirectoryNode dest, IReadOnlyDictionary<string, bool> checkFiles = null)
+            DirectoryNode source, DirectoryNode dest, IReadOnlyDictionary<string, bool> namesDone = null)
         {
             var items = new MatchIssue();
-            var files = checkFiles == null ? source.Files : dest.Files;
+            var files = namesDone == null ? source.Files : dest.Files;
             foreach (var file in files)
             {
-                var checkFile = checkFiles == null ? dest : source;
+                var checkFile = namesDone == null ? dest : source;
                 var destFile = checkFile.Files.FirstOrDefault(f => f.Name == file.Name);
                 items.NamesMatched.Add(file.Name, true);
                 if (destFile != null && destFile.Hash == file.Hash)
@@ -93,30 +93,52 @@ namespace BackUpInSynch.CalculateMissMatches
                     continue;
                 }
 
-                items.FileResultDetailsList.Add(ResultActionGenerator.FileGenertor(file, destFile,
-                    checkFiles == null ? destinationBasePath : sourceBasePath));
+                var item = ResultActionGenerator.FileGenertor(file, destFile, namesDone == null ? destinationBasePath : sourceBasePath);
+                if (namesDone != null)
+                {
+                    item.Source = false;
+                }
+                items.FileResultDetailsList.Add(item);
             }
 
             return items;
         }
 
         private static MatchIssue SortDirectories(string sourceBasePath, string destinationBasePath,
-            DirectoryNode source, DirectoryNode dest, IReadOnlyDictionary<string, bool> items = null)
+            DirectoryNode source, DirectoryNode dest, IReadOnlyDictionary<string, bool> namesDone = null)
         {
             var output = new MatchIssue();
             // this is very specific logic that tightly bounds it to above
-            var gothrough = items == null
+            var gothrough = namesDone == null
                 ? source.SubDirectories
-                : dest.SubDirectories.Where(f => items.ContainsKey(f.Name) == false);
+                : dest.SubDirectories.Where(f => namesDone.ContainsKey(f.Name) == false);
             foreach (var item in gothrough)
             {
-                var match = items == null ? dest : source;
+                var match = namesDone == null ? dest : source;
                 var subMatch = match.SubDirectories.FirstOrDefault(f => f.Name == item.Name);
                 output.NamesMatched.Add(item.Name, true);
                 var complete = Issues(match == dest ? sourceBasePath : destinationBasePath,
                     match == dest ? destinationBasePath : sourceBasePath, item, subMatch);
-                output.DirectoryResultDetailsList.AddRange(complete.DirectoryResultDetailsList);
-                output.FileResultDetailsList.AddRange(complete.FileResultDetailsList);
+
+                foreach (var dir in complete.DirectoryResultDetailsList)
+                {
+                    if (namesDone != null)
+                    {
+                        dir.Source = false;
+                    }
+
+                    output.DirectoryResultDetailsList.Add(dir);
+                }
+
+                foreach (var file in complete.FileResultDetailsList)
+                {
+                    if (namesDone != null)
+                    {
+                        file.Source = false;
+                    }
+
+                    output.FileResultDetailsList.Add(file);
+                }
             }
 
             return output;

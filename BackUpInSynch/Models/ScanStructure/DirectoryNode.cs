@@ -16,7 +16,7 @@ namespace BackUpInSynch.Models.ScanStructure
 
         public TreeNode ToTreeNode()
         {
-            var node = new TreeNode();
+            var node = new TreeNode(Name);
             node.Nodes.AddRange(SubDirectories.Select(f => f.ToTreeNode()).ToArray());
             node.Nodes.AddRange(Files.Select(f => f.ToTreeNode()).ToArray());
             return node;

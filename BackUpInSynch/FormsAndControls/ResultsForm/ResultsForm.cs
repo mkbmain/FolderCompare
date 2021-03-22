@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using BackUpInSynch.CalculateMissMatches;
+using BackUpInSynch.Models.ResultCalcModels;
 using BackUpInSynch.Models.ResultStructure;
 using BackUpInSynch.Models.ScanStructure;
 
@@ -15,14 +16,13 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
         private List<FileResultDetails> Files { get; set; }
         private Panel _panel;
 
-        public ResultsForm(DirectoryNode source, DirectoryNode destination)
+        public ResultsForm(Issues issue)
         {
-            FormBorderStyle = FormBorderStyle.FixedSingle;
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             Text = "Results";
             AutoSize = false;
             Size = new Size(750, 600);
- 
-            var issue = CalculateDiffrences.Issues(source.BasePath, destination.BasePath, source, destination);
+            
             Directories = issue.DirectoryResultDetailsList;
             Files = issue.FileResultDetailsList;
             DrawWindow();

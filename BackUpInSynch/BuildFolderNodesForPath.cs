@@ -9,7 +9,7 @@ namespace BackUpInSynch
     {
         public static DirectoryNode BuildPath(string basePath ,string path, bool calcHash = false)
         {
-            var name = $"{FileAndIoUtils.DirectorySeparatorStr}{NameCleaner(path)}";
+            var name = $"{FileAndIoUtils.DirectorySeparator}{NameCleaner(path)}";
             var node = new DirectoryNode
             {
                 Name = name, 
@@ -39,7 +39,7 @@ namespace BackUpInSynch
 
         private static string NameCleaner(string path)
         {
-            return path.Split(FileAndIoUtils.DirectorySeparatorStr).Last();
+            return path.Split(FileAndIoUtils.DirectorySeparator).Last();
         }
     }
 }

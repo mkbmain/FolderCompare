@@ -9,25 +9,30 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
 {
     public class FileView : NodeViewBase
     {
-        
         private readonly FileResultDetails _fileResultDetails;
         public event EventHandler PathChosen;
 
-        private static string GetDescription(bool missMatch)
+        private static string GetDescription(bool missMatch, bool source)
         {
-            return missMatch ? "Different from destination" : "Missing from destination";
+            return missMatch
+                ? $"Different from {(source ? "destination" : "source")}"
+                : $"Missing from {(source ? "destination" : "source")}";
         }
 
         private Panel FilePanel(FileResultDetails node)
         {
-            var panel = new Panel{Width = MyDefaultSize.Width-65,Height = 220};
+            var panel = new Panel
+            {
+                Width = MyDefaultSize.Width - 65,
+                Height = 220,
+                BackColor = GetColor(node.Source)
+            };
             var label = new TextBox
             {
-                Text = $"{node.Data.FullLocation} is {GetDescription(node.Linked != null)}",
+                Text = $"{node.Data.FullLocation} is {GetDescription(node.Linked != null, node.Source)}",
                 AutoSize = false,
                 Multiline = true,
-                Size = new Size(panel.Width- 65,100),
-                
+                Size = new Size(panel.Width - 65, 100),
             };
             DropDownBox = new ComboBox
                 {Location = new Point(1, label.Bottom + 5), Size = new Size(80, 33)};
@@ -40,7 +45,7 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
             var button = new Button
             {
                 Top = DropDownBox.Top,
-                Left = DropDownBox.Right +5,
+                Left = DropDownBox.Right + 5,
                 Text = "Fix",
             };
 
@@ -58,13 +63,14 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
             panel.Controls.Add(button);
             return panel;
         }
-        
+
 
         public FileView(FileResultDetails node)
         {
             _fileResultDetails = node;
-            DrawMe(MyDefaultSize,ResourceUtil.GetImageFromResource("BackUpInSynch.FileIcon.png"), node.Data.Name, "File Is Missing",
-                FilePanel(node)
+            DrawMe(MyDefaultSize, ResourceUtil.GetImageFromResource("BackUpInSynch.FileIcon.png"), node.Data.Name,
+                $"File Is {(node.Linked !=null ? "different" : "missing")} in {(node.Source ? "destination" : "source")}",
+                FilePanel(node), node.Source
             );
         }
     }

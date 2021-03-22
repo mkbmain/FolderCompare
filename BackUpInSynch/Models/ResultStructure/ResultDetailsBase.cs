@@ -6,6 +6,7 @@ namespace BackUpInSynch.Models.ResultStructure
 {
     public class ResultDetailsBase<T> : EventArgs where T : NodeBase
     {
+        public bool Source = true;
         public T Data { get; set; }
         
         public T Linked { get; set; }

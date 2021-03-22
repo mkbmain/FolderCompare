@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using BackUpInSynch.CalculateMissMatches;
 using BackUpInSynch.Models.ScanStructure;
 using BackUpInSynch.Utils;
 
@@ -12,10 +13,11 @@ namespace BackUpInSynch.FormsAndControls.MainForm
         private readonly DirectoryPanel _folderOne = new DirectoryPanel();
         private readonly DirectoryPanel _folderTwo = new DirectoryPanel();
         private readonly Button _runBtn = new Button();
+        private readonly Label _waringLabel = new Label {Text = "Check contents:", Size = new Size(95,20),TextAlign = ContentAlignment.MiddleCenter, AutoSize = false};
+        private readonly CheckBox _checkBox = new CheckBox{Text =  "Checking contents will take a long time",Size = new Size(300,20)};
 
         public MainForm()
         {
-            
             Controls.Add(_runBtn);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
@@ -25,18 +27,15 @@ namespace BackUpInSynch.FormsAndControls.MainForm
             _runBtn.Location = new Point(33 + _folderTwo.Bottom, Width / 2);
             Width = 640;
             _runBtn.Click += RunBtn_Click;
+            _waringLabel.Location = new Point(10, _folderTwo.Bottom + 5);
+            _checkBox.Location = new Point(_waringLabel.Right + 10, _waringLabel.Top+3);
+            Controls.Add(_checkBox);
+            Controls.Add(_waringLabel);
         }
 
 
         private void RunBtn_Click(object sender, EventArgs e)
         {
-            if (_runBtn.Text == "Results")
-            {
-                var fc = new ResultsForm.ResultsForm(_folderNodeOne, _folderNodeTwo);
-                fc.Show();
-                return;
-            }
-
             var pathOne = _folderOne.GetPathIfValid;
             var pathTwo = _folderTwo.GetPathIfValid;
             if (pathOne == null || pathTwo == null)
@@ -45,20 +44,35 @@ namespace BackUpInSynch.FormsAndControls.MainForm
                 return;
             }
 
-            _runBtn.Text = "Results";
+            _runBtn.Text = "Calculating";
             _runBtn.Enabled = false;
 
-            BackgroundGenerator.Run((pathOne, pathTwo), DoWork, (a, b) => { _runBtn.Enabled = true; }, null);
+            BackgroundGenerator.Run(new BackgroundWorkerInfo{PathOne = pathOne,PathTwo = pathTwo,CheckContents = _checkBox.Checked}, DoWork, (a, b) =>
+            {
+                _runBtn.Enabled = true;
+                var issues = CalculateDiffrences.Issues(_folderNodeOne.BasePath, _folderNodeTwo.BasePath,
+                    _folderNodeOne, _folderNodeTwo);
+                var fc = new ResultsForm.ResultsForm(issues);
+                fc.Show();
+                _runBtn.Text = "Calculate";
+            }, null);
+        }
+        
+        private class BackgroundWorkerInfo
+        {
+            public string PathOne { get; set; }
+            public string PathTwo { get; set; }
+            public bool CheckContents { get; set; }
         }
 
-        private static DirectoryNode _folderNodeOne;
+        private DirectoryNode _folderNodeOne;
         private DirectoryNode _folderNodeTwo;
 
         private void DoWork(object o, DoWorkEventArgs args)
         {
-            var (pathOne, pathTwo) = (ValueTuple<string, string>) args.Argument;
-            _folderNodeOne = BuildFolderNodesForPath.BuildPath(pathOne, pathOne);
-            _folderNodeTwo = BuildFolderNodesForPath.BuildPath(pathTwo, pathTwo);
+            var info = (BackgroundWorkerInfo) args.Argument;
+            _folderNodeOne = BuildFolderNodesForPath.BuildPath(info.PathOne, info.PathOne,info.CheckContents);
+            _folderNodeTwo = BuildFolderNodesForPath.BuildPath(info.PathTwo, info.PathTwo,info.CheckContents);
             MessageBox.Show("Results available");
         }
     }

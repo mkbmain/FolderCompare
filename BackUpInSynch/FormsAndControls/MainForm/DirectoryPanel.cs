@@ -1,6 +1,7 @@
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using BackUpInSynch.Utils;
 
 namespace BackUpInSynch.FormsAndControls.MainForm
 {
@@ -12,7 +13,9 @@ namespace BackUpInSynch.FormsAndControls.MainForm
         private readonly TextBox _pathTxtBox = new TextBox {Multiline = false, AutoSize = false,Size = new Size(280, MyHeight-2), ReadOnly = false};
         private readonly Button _openButton = new Button {Text = "..",AutoSize = false, Size = new Size(23, MyHeight)};
 
-        public string GetPathIfValid => Directory.Exists(_pathTxtBox.Text) ? _pathTxtBox.Text : null;
+        public string GetPathIfValid => Directory.Exists(_pathTxtBox.Text) ? _pathTxtBox.Text.EndsWith(FileAndIoUtils.DirectorySeparator.ToString()) ?  _pathTxtBox.Text :
+            $"{_pathTxtBox.Text}{FileAndIoUtils.DirectorySeparator}"
+            : null;
         private readonly FolderBrowserDialog _folderBrowserDialog = new FolderBrowserDialog();
 
         public DirectoryPanel()
