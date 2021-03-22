@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -10,6 +11,7 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
     internal class DirectoryView : NodeViewBase
     {
         private readonly DirectoryResultDetails _directoryResultDetails;
+        public event EventHandler BackGroundTask;
         public event EventHandler PathChosen;
 
         private Panel DirectoryPanel(DirectoryResultDetails node)
@@ -54,8 +56,15 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
         {
             var actionHandler = _directoryResultDetails.ActionHandlerWithTexts
                 .FirstOrDefault(f => f.Text == DropDownBox.SelectedItem.ToString());
-            actionHandler?.Action?.Invoke();
-            PathChosen?.Invoke(sender, _directoryResultDetails);
+            if (actionHandler != null)
+            {
+                BackgroundGenerator.Run(null, (o, args) =>
+                    {
+                        BackGroundTask?.Invoke(o, args);
+                        actionHandler.Action.Invoke();
+                    },
+                    (o, args) => { PathChosen?.Invoke(sender, _directoryResultDetails); }, null);
+            }
         }
 
         public DirectoryView(DirectoryResultDetails node)
