@@ -50,8 +50,9 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
                 _panel.Controls.Add(directoryView);
             }
 
-            foreach (var fileView in Files.Select(item => new FileView(item) {Top = location}))
+            foreach (var item in Files)
             {
+                var fileView = new FileView(item) {Top = location};
                 fileView.PathChosen += FileOnPathChosen;
                 location += fileView.Height + 5;
                 _panel.Controls.Add(fileView);
