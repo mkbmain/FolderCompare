@@ -47,6 +47,7 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
             {
                 var directoryView = new DirectoryView(item) {Top = location};
                 directoryView.PathChosen += DirectoryOnPathChosen;
+                directoryView.BackGroundTask += DirectoryViewOnBackGroundTask;
                 location += directoryView.Height + 5;
                 _panel.Controls.Add(directoryView);
             }
@@ -55,11 +56,17 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
             {
                 var fileView = new FileView(item) {Top = location};
                 fileView.PathChosen += FileOnPathChosen;
+                fileView.BackGroundTask += DirectoryViewOnBackGroundTask;
                 location += fileView.Height + 5;
                 _panel.Controls.Add(fileView);
             }
 
             Controls.Add(_panel);
+        }
+
+        private void DirectoryViewOnBackGroundTask(object sender, EventArgs e)
+        {
+            _panel.Enabled = false;
         }
 
         private void DirectoryOnPathChosen(object sender, EventArgs e)

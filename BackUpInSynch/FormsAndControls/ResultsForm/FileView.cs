@@ -11,6 +11,7 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
     {
         private readonly FileResultDetails _fileResultDetails;
         public event EventHandler PathChosen;
+        public event EventHandler BackGroundTask;
 
         private static string GetDescription(bool missMatch, bool source)
         {
@@ -52,9 +53,17 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
             button.Click += (sender, args) =>
             {
                 var item = DropDownBox.SelectedItem.ToString();
-                var action = _fileResultDetails.ActionHandlerWithTexts.First(f => f.Text == item);
-                action.Action.Invoke();
-                PathChosen?.Invoke(sender, _fileResultDetails);
+
+                var actionHandler = _fileResultDetails.ActionHandlerWithTexts.First(f => f.Text == item);
+                if (actionHandler != null)
+                {
+                    BackgroundGenerator.Run(null, (o, args2) =>
+                        {
+                            BackGroundTask?.Invoke(o, args2);
+                            actionHandler.Action.Invoke();
+                        },
+                        (o, args2) => { PathChosen?.Invoke(sender, _fileResultDetails); }, null);
+                }
             };
 
             panel.Height = label.Height + DropDownBox.Height + button.Height;

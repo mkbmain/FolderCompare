@@ -33,25 +33,21 @@ namespace BackUpInSynch.Utils
             if (!dir.Exists)
             {
                 throw new DirectoryNotFoundException(
-                    "Source directory does not exist or could not be found: "
-                    + sourceDirName);
+                    $"Source directory does not exist or could not be found: {sourceDirName}");
             }
-
-            var dirs = dir.GetDirectories();
 
             // If the destination directory doesn't exist, create it.       
             Directory.CreateDirectory(destDirName);
 
-            var files = dir.GetFiles();
-            foreach (FileInfo file in files)
+            foreach (var file in dir.GetFiles())
             {
-                string tempPath = Path.Combine(destDirName, file.Name);
+                var tempPath = Path.Combine(destDirName, file.Name);
                 file.CopyTo(tempPath, false);
             }
 
-            foreach (DirectoryInfo subdir in dirs)
+            foreach (var subdir in dir.GetDirectories())
             {
-                string tempPath = Path.Combine(destDirName, subdir.Name);
+                var tempPath = Path.Combine(destDirName, subdir.Name);
                 DirectoryCopy(subdir.FullName, tempPath);
             }
         }
