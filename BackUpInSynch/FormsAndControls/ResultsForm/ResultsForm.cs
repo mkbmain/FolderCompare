@@ -16,7 +16,7 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
 
         public ResultsForm(Issues issue)
         {
-            FormBorderStyle = FormBorderStyle.FixedDialog;
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Text = "Results";
             AutoSize = false;
             Size = new Size(750, 600);

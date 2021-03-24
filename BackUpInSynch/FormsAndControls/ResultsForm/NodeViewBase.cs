@@ -56,13 +56,14 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
                 Location = new Point(Width - 25, 15),
                 Font = new Font(FontFamily.GenericMonospace, 12, FontStyle.Bold)
             };
-            Controls.Add(expander);
-            expandControl.Top = pictureBox.Bottom;
+            expandControl.Top = pictureBox.Bottom + 5;
             expandControl.Left = 1;
+            Controls.Add(expandControl);
+            Controls.Add(expander);
             Controls.Add(pictureBox);
             Controls.Add(titleLabel);
             Controls.Add(descriptionLabel);
-            Controls.Add(expandControl);
+
             titleLabel.SendToBack();
 
             BackColor = GetColor(source);
