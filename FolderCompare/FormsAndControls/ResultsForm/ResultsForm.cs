@@ -18,6 +18,7 @@ namespace FolderCompare.FormsAndControls.ResultsForm
         public ResultsForm(Issues issue)
         {
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
             Text = "Results";
             AutoSize = false;
             Size = new Size(750, 600);
@@ -36,7 +37,11 @@ namespace FolderCompare.FormsAndControls.ResultsForm
             }
 
             _panel = new Panel
-                {Location = new Point(15, 15), Name = "M", Size = new Size(Width - 30, Height - 50), AutoScroll = true};
+            {
+                Location = new Point(15, 15), Name = "M",
+                Size = new Size(Width - 30, Height - 50),
+                AutoScroll = true
+            };
 
             foreach (var item in _panel.Controls.Cast<Control>())
             {
@@ -44,7 +49,7 @@ namespace FolderCompare.FormsAndControls.ResultsForm
             }
 
             var location = 0;
-            foreach (var item in Directories)
+            foreach (var item in Directories.OrderBy(f => !f.Source))
             {
                 var directoryView = new DirectoryView(item) {Top = location};
                 directoryView.PathChosen += DirectoryOnPathChosen;
@@ -53,7 +58,7 @@ namespace FolderCompare.FormsAndControls.ResultsForm
                 _panel.Controls.Add(directoryView);
             }
 
-            foreach (var item in Files.OrderByDescending(x => x.Data.FileInfo.Length))
+            foreach (var item in Files.OrderBy(f => !f.Source).ThenByDescending(x => x.Data.FileInfo.Length))
             {
                 var fileView = new FileView(item) {Top = location};
                 fileView.PathChosen += FileOnPathChosen;

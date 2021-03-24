@@ -32,7 +32,7 @@ namespace FolderCompare.FormsAndControls.MainForm
             _folderTwo.Top = _folderOne.Bottom + 5;
             Controls.Add(_folderOne);
             Controls.Add(_folderTwo);
-            Size = new Size(410, 150);
+            Size = new Size(410, 160);
             this.Text = "Folder comparer";
             _runBtn.Click += RunBtn_Click;
             _waringLabel.Location = new Point(10, _folderTwo.Bottom + 5);

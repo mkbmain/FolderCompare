@@ -32,39 +32,38 @@ namespace FolderCompare.Utils
             };
         }
 
-        public static FileResultDetails FileGenertor(FileNode source, FileNode dest, string destinationBasePath)
+        public static FileResultDetails FileGenerator(FileNode source, FileNode dest, string destinationBasePath)
         {
-            var item = new FileResultDetails
+            var actionHandlers = dest == null
+                ? new List<ActionHandlerWithText>
+                {
+                    Generate("Copy Me",
+                        () =>
+                        {
+                            var locationForNewFile = Path.Combine(destinationBasePath, source.RelativeLocation);
+                            var directory = locationForNewFile.Substring(0, locationForNewFile.Length - source.Name.Length);
+                            if (!Directory.Exists(directory))
+                            {
+                                Directory.CreateDirectory(directory);
+                            }
+
+                            File.Copy(source.FullLocation, locationForNewFile, true);
+                        })
+                }
+                : new List<ActionHandlerWithText>
+                {
+                    Generate("OverWriteThem", () => File.Copy(source.FullLocation, dest.FullLocation, true)),
+                    Generate("OverWriteMe", () => File.Copy(dest.FullLocation, source.FullLocation, true))
+                };
+
+            actionHandlers.Add(Generate("Delete Me", () => File.Delete(source.FullLocation)));
+
+            return new FileResultDetails
             {
                 Data = source,
                 Linked = dest,
-                ActionHandlerWithTexts = dest == null
-                    ? new List<ActionHandlerWithText>()
-                    : new List<ActionHandlerWithText>
-                    {
-                        Generate("OverWriteThem", () => File.Copy(source.FullLocation, dest.FullLocation, true))
-                    }
+                ActionHandlerWithTexts = actionHandlers
             };
-
-
-            item.ActionHandlerWithTexts = item.ActionHandlerWithTexts.Union(new List<ActionHandlerWithText>
-            {
-                Generate("Copy Me",
-                    () =>
-                    {
-                        var locationForNewFile = Path.Combine(destinationBasePath, source.RelativeLocation);
-                        var directory = locationForNewFile.Substring(0, locationForNewFile.Length - source.Name.Length);
-                        if (!Directory.Exists(directory))
-                        {
-                            Directory.CreateDirectory(directory);
-                        }
-
-                        File.Copy(source.FullLocation, locationForNewFile, true);
-                    }),
-                Generate("Delete Me", () => File.Delete(source.FullLocation))
-            });
-
-            return item;
         }
     }
 }

@@ -24,10 +24,10 @@ namespace FolderCompare.FormsAndControls.ResultsForm
             var label = new Label {Text = node.Data.FullLocation, AutoSize = true};
 
             var treeView = new TreeView
-                {Top = label.Bottom + 5, Nodes = {node.Data.ToTreeNode()}, Size = new Size(panel.Width - 90, 200)};
+                {Top = label.Bottom + 5, Nodes = {node.Data.ToTreeNode()}, Size = new Size(panel.Width - 90, 150)};
             treeView.ExpandAll();
             DropDownBox = new ComboBox
-                {Location = new Point(treeView.Right + 7, treeView.Top), Size = new Size(80, 33)};
+                {Location = new Point(treeView.Left+5, treeView.Bottom+5), Size = new Size(130, 44)};
             foreach (var actionHandlerWithText in node.ActionHandlerWithTexts)
             {
                 DropDownBox.Items.Add(actionHandlerWithText.Text);
@@ -36,15 +36,15 @@ namespace FolderCompare.FormsAndControls.ResultsForm
             DropDownBox.SelectedIndex = 0;
             var button = new Button
             {
-                Top = DropDownBox.Bottom + 5,
-                Left = DropDownBox.Left,
+                Top = DropDownBox.Top,
+                Left = DropDownBox.Right+10,
                 BackColor = GlobalColor.Get(ColorFor.Button),
                 Text = "Fix",
             };
 
             button.Click += ButtonOnClick;
 
-            panel.Height = label.Height + treeView.Height;
+            panel.Height = button.Bottom + 5;
             panel.Controls.Add(label);
             panel.Controls.Add(DropDownBox);
             panel.Controls.Add(button);

@@ -31,6 +31,7 @@ namespace FolderCompare.FormsAndControls.ResultsForm
             var label = new TextBox
             {
                 AutoSize = false,
+                ReadOnly = true,
                 Multiline = true,
                 Size = new Size(panel.Width - 65, 100),
             };

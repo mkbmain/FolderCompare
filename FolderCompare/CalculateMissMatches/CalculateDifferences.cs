@@ -63,12 +63,12 @@ namespace FolderCompare.CalculateMissMatches
 
             if (source == null)
             {
-                return dest.Files.Select(f => ResultActionGenerator.FileGenertor(f, null, sourceBasePath));
+                return dest.Files.Select(f => ResultActionGenerator.FileGenerator(f, null, sourceBasePath));
             }
 
             if (dest == null)
             {
-                return source.Files.Select(f => ResultActionGenerator.FileGenertor(f, null, destinationBasePath));
+                return source.Files.Select(f => ResultActionGenerator.FileGenerator(f, null, destinationBasePath));
             }
 
             var result = SortFiles(sourceBasePath, destinationBasePath, source, dest);
@@ -93,7 +93,7 @@ namespace FolderCompare.CalculateMissMatches
                     continue;
                 }
 
-                var item = ResultActionGenerator.FileGenertor(file, destFile,
+                var item = ResultActionGenerator.FileGenerator(file, destFile,
                     namesDone == null ? destinationBasePath : sourceBasePath);
                 if (namesDone != null)
                 {
