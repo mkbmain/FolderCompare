@@ -15,7 +15,10 @@ namespace BackUpInSynch.FormsAndControls.MainForm
         private readonly TextBox _pathTxtBox = new TextBox
             {Multiline = false, AutoSize = false, Size = new Size(280, MyHeight - 2), ReadOnly = false};
 
-        private readonly Button _openButton = new Button {Text = "..", AutoSize = false, Size = new Size(23, MyHeight)};
+        private readonly Button _openButton = new Button
+        {
+            Text = "..", BackColor = GlobalColor.Get(ColorFor.Button), AutoSize = false, Size = new Size(23, MyHeight)
+        };
 
         public string GetPathIfValid => Directory.Exists(_pathTxtBox.Text)
             ? _pathTxtBox.Text.EndsWith(FileAndIoUtils.DirectorySeparator.ToString()) ? _pathTxtBox.Text :

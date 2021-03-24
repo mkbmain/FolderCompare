@@ -26,11 +26,10 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
             {
                 Width = MyDefaultSize.Width - 65,
                 Height = 220,
-                BackColor = GetColor(node.Source)
+                BackColor = GlobalColor.Get(node.Source ? ColorFor.SourceInfo : ColorFor.DestinationInfo)
             };
             var label = new TextBox
             {
-                Text = $"{node.Data.FullLocation} is {GetDescription(node.Linked != null, node.Source)}",
                 AutoSize = false,
                 Multiline = true,
                 Size = new Size(panel.Width - 65, 100),
@@ -45,6 +44,7 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
             DropDownBox.SelectedIndex = 0;
             var button = new Button
             {
+                BackColor = GlobalColor.Get(ColorFor.Button),
                 Top = DropDownBox.Top,
                 Left = DropDownBox.Right + 5,
                 Text = "Fix",
@@ -70,6 +70,7 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
             panel.Controls.Add(label);
             panel.Controls.Add(DropDownBox);
             panel.Controls.Add(button);
+            label.Text = $"{node.Data.FullLocation} is {GetDescription(node.Linked != null, node.Source)}";
             return panel;
         }
 

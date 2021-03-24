@@ -20,7 +20,7 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
             {
                 Width = MyDefaultSize.Width - 65,
                 Height = 220,
-                BackColor = GetColor(node.Source)
+                BackColor = GlobalColor.Get(node.Source ? ColorFor.SourceInfo : ColorFor.DestinationInfo)
             };
             var label = new Label {Text = node.Data.FullLocation, AutoSize = true};
 
@@ -39,6 +39,7 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
             {
                 Top = DropDownBox.Bottom + 5,
                 Left = DropDownBox.Left,
+                BackColor = GlobalColor.Get(ColorFor.Button),
                 Text = "Fix",
             };
 

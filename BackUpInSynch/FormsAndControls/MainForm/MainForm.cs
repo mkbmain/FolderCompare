@@ -12,7 +12,7 @@ namespace BackUpInSynch.FormsAndControls.MainForm
     {
         private readonly DirectoryPanel _folderOne = new DirectoryPanel();
         private readonly DirectoryPanel _folderTwo = new DirectoryPanel();
-        private readonly Button _runBtn = new Button();
+        private readonly Button _runBtn = new Button {Text = "Calculate", BackColor = GlobalColor.Get(ColorFor.Button)};
 
         private readonly Label _waringLabel = new Label
         {
@@ -25,6 +25,7 @@ namespace BackUpInSynch.FormsAndControls.MainForm
 
         public MainForm()
         {
+            BackColor = GlobalColor.Get(ColorFor.Window);
             Controls.Add(_runBtn);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;

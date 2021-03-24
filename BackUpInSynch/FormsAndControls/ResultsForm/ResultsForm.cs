@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using BackUpInSynch.Models.ResultCalcModels;
 using BackUpInSynch.Models.ResultStructure;
+using BackUpInSynch.Utils;
 
 namespace BackUpInSynch.FormsAndControls.ResultsForm
 {
@@ -20,7 +21,7 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
             Text = "Results";
             AutoSize = false;
             Size = new Size(750, 600);
-
+            BackColor = GlobalColor.Get(ColorFor.Window);
             Directories = issue.DirectoryResultDetailsList;
             Files = issue.FileResultDetailsList;
             DrawWindow();

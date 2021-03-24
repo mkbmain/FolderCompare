@@ -1,21 +1,14 @@
 using System.Drawing;
 using System.Windows.Forms;
+using BackUpInSynch.Utils;
 
 namespace BackUpInSynch.FormsAndControls.ResultsForm
 {
     internal abstract class NodeViewBase : Panel
     {
         protected ComboBox DropDownBox;
-
-
         protected Size MyDefaultSize = new Size(700, 56);
         private Size _withControl;
-
-
-        protected Color GetColor(bool source)
-        {
-            return source ? Color.LimeGreen : Color.Maroon;
-        }
 
         protected void DrawMe(Size size, Image image, string title, string description, Control expandControl,
             bool source)
@@ -66,7 +59,7 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
 
             titleLabel.SendToBack();
 
-            BackColor = GetColor(source);
+            BackColor = GlobalColor.Get(source ? ColorFor.SourceInfo : ColorFor.DestinationInfo);
             expander.Click += (sender, args) =>
             {
                 expander.Text = expander.Text == "+" ? "-" : "+";
