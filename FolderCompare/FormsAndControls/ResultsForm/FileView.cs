@@ -31,7 +31,6 @@ namespace FolderCompare.FormsAndControls.ResultsForm
             var label = new TextBox
             {
                 AutoSize = false,
-                ReadOnly = true,
                 Multiline = true,
                 Size = new Size(panel.Width - 65, 100),
             };
@@ -72,6 +71,7 @@ namespace FolderCompare.FormsAndControls.ResultsForm
             panel.Controls.Add(DropDownBox);
             panel.Controls.Add(button);
             label.Text = $"{node.Data.FullLocation} is {GetDescription(node.Linked != null, node.Source)}";
+            label.ReadOnly = true;
             return panel;
         }
 

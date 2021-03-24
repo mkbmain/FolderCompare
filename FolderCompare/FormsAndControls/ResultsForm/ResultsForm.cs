@@ -67,7 +67,16 @@ namespace FolderCompare.FormsAndControls.ResultsForm
                 _panel.Controls.Add(fileView);
             }
 
-            Controls.Add(_panel);
+            if (Directories.Any() || Files.Any())
+            {
+                Controls.Add(_panel);  
+            }
+            else
+            {
+                Controls.Add(new Label{Text =  "No Differences found",AutoSize = false,Size = new Size(300,100),
+                    Font =  new Font(FontFamily.GenericMonospace, 20, FontStyle.Bold)});
+            }
+
         }
 
         private void DirectoryViewOnBackGroundTask(object sender, EventArgs e)
