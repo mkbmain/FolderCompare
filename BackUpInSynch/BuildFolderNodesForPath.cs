@@ -30,6 +30,7 @@ namespace BackUpInSynch
                     Name = names,
                     BasePath = basePath,
                     FullLocation = item,
+                    FileInfo = new FileInfo(item),
                     Hash = calcHash ? FileAndIoUtils.CalculateMd5(item) : string.Empty
                 });
             }

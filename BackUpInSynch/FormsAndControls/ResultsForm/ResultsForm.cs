@@ -52,7 +52,7 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
                 _panel.Controls.Add(directoryView);
             }
 
-            foreach (var item in Files)
+            foreach (var item in Files.OrderByDescending(x => x.Data.FileInfo.Length))
             {
                 var fileView = new FileView(item) {Top = location};
                 fileView.PathChosen += FileOnPathChosen;

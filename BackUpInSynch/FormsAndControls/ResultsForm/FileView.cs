@@ -77,7 +77,8 @@ namespace BackUpInSynch.FormsAndControls.ResultsForm
         public FileView(FileResultDetails node)
         {
             _fileResultDetails = node;
-            DrawMe(MyDefaultSize, ResourceUtil.GetImageFromResource("BackUpInSynch.FileIcon.png"), node.Data.Name,
+            DrawMe(MyDefaultSize, ResourceUtil.GetImageFromResource("BackUpInSynch.FileIcon.png"),
+                $"{FileAndIoUtils.BytesToString(node.Data.FileInfo.Length)} {node.Data.Name}",
                 $"File Is {(node.Linked != null ? "different" : "missing")} in {(node.Source ? "destination" : "source")}",
                 FilePanel(node), node.Source
             );
