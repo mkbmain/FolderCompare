@@ -27,7 +27,7 @@ namespace FolderCompare.Utils
                 ActionHandlerWithTexts = new List<ActionHandlerWithText>
                 {
                     Generate("Copy Me", () => FileAndIoUtils.DirectoryCopy(source.FullLocation, copyPath)),
-                    Generate("Delete Me", () => Directory.Delete(source.FullLocation))
+                    Generate("Delete Me", () => Directory.Delete(source.FullLocation, true))
                 }
             };
         }
