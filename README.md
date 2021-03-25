@@ -21,7 +21,7 @@ this was done in this version of .net so it was compatible with mono as all \ ma
 
 
 
-## complete Guide
+## Complete Guide
 
 <p> open the open folder dialog by clicking buttons highligthed in red</p>
 <img title="" alt="Alt text" src="./Images/1Start.JPG" width = 350px>
