@@ -17,12 +17,10 @@ namespace FolderCompare.FormsAndControls.MainForm
 
         private readonly Label _waringLabel = new Label
         {
-            Text = "Check contents:", Size = new Size(95, 20), TextAlign = ContentAlignment.MiddleCenter,
-            AutoSize = false
+            Text = "Check contents:", Size = new Size(95, 20), TextAlign = ContentAlignment.MiddleCenter, AutoSize = false
         };
 
-        private readonly CheckBox _checkBox = new CheckBox
-            {Text = "Checking contents will take a long time", Size = new Size(300, 20)};
+        private readonly CheckBox _checkBox = new CheckBox {Text = "Checking contents will take a long time", Size = new Size(300, 20)};
 
         public MainForm()
         {
@@ -44,7 +42,6 @@ namespace FolderCompare.FormsAndControls.MainForm
             Controls.Add(_checkBox);
             Controls.Add(_waringLabel);
         }
-
 
         private void RunBtn_Click(object sender, EventArgs e)
         {
