@@ -88,8 +88,7 @@ namespace FolderCompare.FormsAndControls.ResultsForm
         private void DirectoryOnPathChosen(object sender, EventArgs e)
         {
             var item = e as DirectoryResultDetails;
-            Directories = Directories.Where(f => f.Data.Id != item.Data.Id)
-                .Where(f => f.Linked == null || f.Linked.Id != item.Data.Id).ToList();
+            Directories = Directories.Where(f => f.Data.Id != item.Data.Id).ToList();
             DrawWindow();
         }
 

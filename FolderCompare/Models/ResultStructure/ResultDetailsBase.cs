@@ -8,8 +8,7 @@ namespace FolderCompare.Models.ResultStructure
     {
         public bool Source = true;
         public T Data { get; set; }
-
-        public T Linked { get; set; }
+        
 
         public IEnumerable<ActionHandlerWithText> ActionHandlerWithTexts { get; set; }
     }
