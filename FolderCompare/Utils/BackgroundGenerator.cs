@@ -6,13 +6,13 @@ namespace FolderCompare.Utils
     internal static class BackgroundGenerator
     {
         public static BackgroundWorker Run(object args, Action<object, DoWorkEventArgs> run,
-            Action<object, RunWorkerCompletedEventArgs> whencomplete, Action<object, ProgressChangedEventArgs> progress)
+            Action<object, RunWorkerCompletedEventArgs> whenComplete, Action<object, ProgressChangedEventArgs> progress)
         {
-            BackgroundWorker backgroundWorker = new BackgroundWorker();
+            var backgroundWorker = new BackgroundWorker();
             backgroundWorker.DoWork += run.Invoke;
-            if (whencomplete != null)
+            if (whenComplete != null)
             {
-                backgroundWorker.RunWorkerCompleted += whencomplete.Invoke;
+                backgroundWorker.RunWorkerCompleted += whenComplete.Invoke;
             }
 
             if (progress != null)
