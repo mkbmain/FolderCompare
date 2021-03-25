@@ -1,9 +1,9 @@
 # FolderComparer
 
-Allows you to compare 2 folders or drives to see diffrence between the files. 
+Allows you to compare 2 folders or drives to see differences between the files and folders. 
 
 
-this was made in order to ensure my backup drive and its reduency plan another back up driver where uptodate with each other and in synch.
+This was made in order to ensure my backup drive and it's redundancy plan, another back up driver were up to date with each other and in synch.
 
 It seems to work fairly well 
 
@@ -17,7 +17,7 @@ It seems to work fairly well
 
 
 ## Please note
-this was done in this version of .net so it was compatible with mono as all \ majority of the development for this was done on linux meaning visual studio designer for forms will probably not work as all forms and controls where done by hand.
+This was done in this version of .net so it was compatible with mono as all \ majority of the development for this was done on linux meaning visual studio designer for forms will probably not work as all forms and controls where done by hand.
 
 
 
@@ -29,13 +29,13 @@ this was done in this version of .net so it was compatible with mono as all \ ma
 <img title="" alt="Alt text" src="./Images/2BrowseFolder.JPG" width = 350px>
 <p> by clicking the check contents it will do a md5 hash check on the files this can take a long time with out will just compare size of items in bytes to see diffrences</p>
 <img title="" alt="Alt text" src="./Images/3FolderSetup.JPG" width = 350px>
-<p> then just wait and enjoy a progress bar buttons will be disabled at this point</p>
+<p> then just wait and enjoy, a progress bar buttons will be disabled at this point</p>
 <img title="" alt="Alt text" src="./Images/4WaitForProgress.JPG" width = 350px>
 <p> once done you will get a little message box</p>
 <img title="" alt="Alt text" src="./Images/5Done.JPG" width = 150px>
-<p> you can now review all diffrences </p>
+<p> you can now review all differences </p>
 <img title="" alt="Alt text" src="./Images/6Results.JPG" width = 450px>
-<p> you can click the + in the right hand corner of any of the nodes to see details, diretories give you these options</p>
+<p> you can click the + in the right hand corner of any of the nodes to see details, directories give you these options</p>
 <img title="" alt="Alt text" src="./Images/7FolderWithOptions.JPG" width = 450px>
 <p> File missmatches give you these options</p>
 <img title="" alt="Alt text" src="./Images/8FileMissMatch.JPG" width = 450px>
@@ -45,7 +45,6 @@ this was done in this version of .net so it was compatible with mono as all \ ma
 
 
 ## Enjoy
-
 
 
 of course goes with out saying this has worked for my purposes feel free to edit it for yours. 
