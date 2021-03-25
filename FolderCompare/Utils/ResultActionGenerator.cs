@@ -7,7 +7,7 @@ using FolderCompare.Models.ScanStructure;
 
 namespace FolderCompare.Utils
 {
-    public static class ResultActionGenerator
+    internal static class ResultActionGenerator
     {
         private static ActionHandlerWithText Generate(string text, Action action)
         {

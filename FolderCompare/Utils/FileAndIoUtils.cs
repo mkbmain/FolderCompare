@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 
 namespace FolderCompare.Utils
 {
-    public static class FileAndIoUtils
+    internal static class FileAndIoUtils
     {
         private static char? _directorySeparatorStr;
 

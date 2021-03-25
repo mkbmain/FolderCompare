@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace FolderCompare.Utils
 {
-    public class ResourceUtil
+    internal class ResourceUtil
     {
         public static Image GetImageFromResource(string fileName)
         {

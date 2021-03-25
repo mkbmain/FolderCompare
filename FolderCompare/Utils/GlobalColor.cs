@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace FolderCompare.Utils
 {
-    public static class GlobalColor
+    internal static class GlobalColor
     {
         public static Color Get(ColorFor item)
         {
@@ -23,7 +23,7 @@ namespace FolderCompare.Utils
         }
     }
 
-    public enum ColorFor
+    internal enum ColorFor
     {
         SourceInfo = 0,
         DestinationInfo = 1,
