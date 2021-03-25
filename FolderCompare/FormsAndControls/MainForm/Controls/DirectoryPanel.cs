@@ -3,7 +3,7 @@ using System.IO;
 using System.Windows.Forms;
 using FolderCompare.Utils;
 
-namespace FolderCompare.FormsAndControls.MainForm
+namespace FolderCompare.FormsAndControls.MainForm.Controls
 {
     internal class DirectoryPanel : Panel
     {

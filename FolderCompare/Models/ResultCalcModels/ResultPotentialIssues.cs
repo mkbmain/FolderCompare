@@ -3,9 +3,9 @@ using FolderCompare.Models.ResultStructure;
 
 namespace FolderCompare.Models.ResultCalcModels
 {
-    public class Issues
+    public class ResultPotentialIssues
     {
-        public Issues()
+        public ResultPotentialIssues()
         {
             DirectoryResultDetailsList = new List<DirectoryResultDetails>();
             FileResultDetailsList = new List<FileResultDetails>();

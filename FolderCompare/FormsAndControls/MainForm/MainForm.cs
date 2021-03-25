@@ -3,6 +3,8 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using FolderCompare.CalculateMissMatches;
+using FolderCompare.FormsAndControls.MainForm.Controls;
+using FolderCompare.Models;
 using FolderCompare.Models.ScanStructure;
 using FolderCompare.Utils;
 
@@ -13,13 +15,13 @@ namespace FolderCompare.FormsAndControls.MainForm
         private readonly DirectoryPanel _folderOne = new DirectoryPanel();
         private readonly DirectoryPanel _folderTwo = new DirectoryPanel();
         private readonly Button _runBtn = new Button {Text = "Calculate", BackColor = GlobalColor.Get(ColorFor.Button)};
-        private readonly ProgressBar _progressBar = new ProgressBar {Maximum = 100, Size = new Size(100, 25),Visible = false};
+        private readonly ProgressBar _progressBar = new ProgressBar {Maximum = 100, Size = new Size(100, 25), Visible = false};
         private readonly CheckBox _checkBox = new CheckBox {Text = "Checking contents will take a long time", Size = new Size(300, 20)};
         private readonly Label _waringLabel = new Label {Text = "Check contents:", Size = new Size(95, 20), AutoSize = false};
 
         private DirectoryNode _folderNodeOne;
         private DirectoryNode _folderNodeTwo;
-        
+
         public MainForm()
         {
             BackColor = GlobalColor.Get(ColorFor.Window);
@@ -60,7 +62,7 @@ namespace FolderCompare.FormsAndControls.MainForm
 
         private void WhenComplete(object o, RunWorkerCompletedEventArgs completedEventArgs)
         {
-            var issues = CalculateDifferences.Issues(_folderNodeOne.BasePath, _folderNodeTwo.BasePath,
+            var issues = CalculateDifferencesDirectories.Issues(_folderNodeOne.BasePath, _folderNodeTwo.BasePath,
                 _folderNodeOne, _folderNodeTwo, _checkBox.Checked);
             _progressBar.Value = 95;
             MessageBox.Show("Done see results");

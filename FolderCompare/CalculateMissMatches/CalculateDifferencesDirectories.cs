@@ -7,12 +7,12 @@ using FolderCompare.Utils;
 
 namespace FolderCompare.CalculateMissMatches
 {
-    internal static class CalculateDifferences
+    internal static class CalculateDifferencesDirectories
     {
-        public static Issues Issues(string sourceBasePath, string destinationBasePath, DirectoryNode source,
+        public static ResultPotentialIssues Issues(string sourceBasePath, string destinationBasePath, DirectoryNode source,
             DirectoryNode dest, bool checkContents)
         {
-            var output = new Issues
+            var output = new ResultPotentialIssues
             {
                 DirectoryResultDetailsList = new List<DirectoryResultDetails>(),
                 FileResultDetailsList = new List<FileResultDetails>()
@@ -48,68 +48,15 @@ namespace FolderCompare.CalculateMissMatches
             output.DirectoryResultDetailsList.AddRange(items.DirectoryResultDetailsList);
             output.FileResultDetailsList.AddRange(items.FileResultDetailsList);
 
-            output.FileResultDetailsList.AddRange(ManageFiles(sourceBasePath, destinationBasePath, source, dest, checkContents));
+            output.FileResultDetailsList.AddRange(CalculateDifferencesFiles.ManageFiles(sourceBasePath, destinationBasePath, source, dest, checkContents));
             return output;
         }
+        
 
-        private static IEnumerable<FileResultDetails> ManageFiles(string sourceBasePath, string destinationBasePath,
-            DirectoryNode source,
-            DirectoryNode dest, bool checkContents)
-        {
-            if (source == null && dest == null)
-            {
-                return new FileResultDetails[0];
-            }
-
-            if (source == null)
-            {
-                return dest.Files.Select(f => ResultActionGenerator.FileGenerator(f, null, sourceBasePath));
-            }
-
-            if (dest == null)
-            {
-                return source.Files.Select(f => ResultActionGenerator.FileGenerator(f, null, destinationBasePath));
-            }
-
-            var result = SortFiles(sourceBasePath, destinationBasePath, source, dest, checkContents);
-            var list = result.FileResultDetailsList;
-            list.AddRange(SortFiles(sourceBasePath, destinationBasePath, source, dest, checkContents, result.NamesMatched)
-                .FileResultDetailsList);
-            return list;
-        }
-
-        private static MatchIssue SortFiles(string sourceBasePath, string destinationBasePath,
+        private static MatchResultPotentialIssue SortDirectories(string sourceBasePath, string destinationBasePath,
             DirectoryNode source, DirectoryNode dest, bool checkContents, IReadOnlyDictionary<string, bool> namesDone = null)
         {
-            var items = new MatchIssue();
-            var files = namesDone == null ? source.Files : dest.Files;
-            foreach (var file in files)
-            {
-                var checkFile = namesDone == null ? dest : source;
-                var destFile = checkFile.Files.FirstOrDefault(f => f.Name == file.Name);
-                items.NamesMatched.Add(file.Name, true);
-                if (destFile != null && destFile.FileInfo.Length == file.FileInfo.Length && (!checkContents || destFile.Hash() == file.Hash()))
-                {
-                    continue;
-                }
-
-                var item = ResultActionGenerator.FileGenerator(file, destFile,
-                    namesDone == null ? destinationBasePath : sourceBasePath);
-                if (namesDone != null)
-                {
-                    item.Source = false;
-                }
-
-                items.FileResultDetailsList.Add(item);
-            }
-
-            return items;
-        }
-
-        private static MatchIssue SortDirectories(string sourceBasePath, string destinationBasePath,
-            DirectoryNode source, DirectoryNode dest, bool checkContents, IReadOnlyDictionary<string, bool> namesDone = null)
-        {
-            var output = new MatchIssue();
+            var output = new MatchResultPotentialIssue();
             // this is very specific logic that tightly bounds it to above
             var gothrough = namesDone == null
                 ? source.SubDirectories
@@ -145,5 +92,6 @@ namespace FolderCompare.CalculateMissMatches
 
             return output;
         }
+        
     }
 }

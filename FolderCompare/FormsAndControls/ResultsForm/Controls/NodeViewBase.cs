@@ -2,7 +2,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using FolderCompare.Utils;
 
-namespace FolderCompare.FormsAndControls.ResultsForm
+namespace FolderCompare.FormsAndControls.ResultsForm.Controls
 {
     internal abstract class NodeViewBase : Panel
     {

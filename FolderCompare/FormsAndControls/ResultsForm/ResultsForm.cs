@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using FolderCompare.FormsAndControls.ResultsForm.Controls;
 using FolderCompare.Models.ResultCalcModels;
 using FolderCompare.Models.ResultStructure;
 using FolderCompare.Utils;
@@ -15,7 +16,7 @@ namespace FolderCompare.FormsAndControls.ResultsForm
         private List<FileResultDetails> Files { get; set; }
         private Panel _panel;
 
-        public ResultsForm(Issues issue)
+        public ResultsForm(ResultPotentialIssues resultPotentialIssue)
         {
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
@@ -23,8 +24,8 @@ namespace FolderCompare.FormsAndControls.ResultsForm
             AutoSize = false;
             Size = new Size(750, 600);
             BackColor = GlobalColor.Get(ColorFor.Window);
-            Directories = issue.DirectoryResultDetailsList;
-            Files = issue.FileResultDetailsList;
+            Directories = resultPotentialIssue.DirectoryResultDetailsList;
+            Files = resultPotentialIssue.FileResultDetailsList;
             DrawWindow();
         }
 

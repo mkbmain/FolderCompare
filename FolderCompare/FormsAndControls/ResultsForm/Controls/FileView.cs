@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using FolderCompare.Models.ResultStructure;
 using FolderCompare.Utils;
 
-namespace FolderCompare.FormsAndControls.ResultsForm
+namespace FolderCompare.FormsAndControls.ResultsForm.Controls
 {
     internal class FileView : NodeViewBase
     {

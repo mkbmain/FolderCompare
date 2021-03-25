@@ -2,9 +2,9 @@ using System.Collections.Generic;
 
 namespace FolderCompare.Models.ResultCalcModels
 {
-    internal class MatchIssue : Issues
+    internal class MatchResultPotentialIssue : ResultPotentialIssues
     {
-        public MatchIssue()
+        public MatchResultPotentialIssue()
         {
             NamesMatched = new Dictionary<string, bool>();
         }

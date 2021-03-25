@@ -1,4 +1,4 @@
-namespace FolderCompare.FormsAndControls.MainForm
+namespace FolderCompare.Models
 {
     internal class BackgroundWorkerInfo
     {
