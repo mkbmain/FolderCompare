@@ -34,15 +34,15 @@ also I have seen there are a few things that don't look right on .net on windows
 <p> then just wait and enjoy a progress bar buttons will be disabled at this point</p>
 <img title="" alt="Alt text" src="./Images/4WaitForProgress.JPG" width = 350px>
 <p> once done you will get a little message box</p>
-<img title="" alt="Alt text" src="./Images/5Done.JPG" width = 350px>
+<img title="" alt="Alt text" src="./Images/5Done.JPG" width = 150px>
 <p> you can now review all diffrences </p>
-<img title="" alt="Alt text" src="./Images/6Results.JPG" width = 350px>
+<img title="" alt="Alt text" src="./Images/6Results.JPG" width = 450px>
 <p> you can click the + in the right hand corner of any of the nodes to see details, diretories give you these options</p>
-<img title="" alt="Alt text" src="./Images/7FolderWithOptions.JPG" width = 350px>
+<img title="" alt="Alt text" src="./Images/7FolderWithOptions.JPG" width = 450px>
 <p> File missmatches give you these options</p>
-<img title="" alt="Alt text" src="./Images/8FileMissMatch.JPG" width = 350px>
+<img title="" alt="Alt text" src="./Images/8FileMissMatch.JPG" width = 450px>
 <p> File missing give you these options</p>
-<img title="" alt="Alt text" src="./Images/9FileMissing.JPG" width = 350px>
+<img title="" alt="Alt text" src="./Images/9FileMissing.JPG" width = 450px>
 
 
 
