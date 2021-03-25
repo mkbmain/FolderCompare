@@ -13,7 +13,7 @@ namespace FolderCompare.FormsAndControls.MainForm
         private readonly DirectoryPanel _folderOne = new DirectoryPanel();
         private readonly DirectoryPanel _folderTwo = new DirectoryPanel();
         private readonly Button _runBtn = new Button {Text = "Calculate", BackColor = GlobalColor.Get(ColorFor.Button)};
-        private readonly ProgressBar _progressBar = new ProgressBar {Maximum = 100, Size = new Size(100, 25)};
+        private readonly ProgressBar _progressBar = new ProgressBar {Maximum = 100, Size = new Size(100, 25),Visible = false};
         private readonly CheckBox _checkBox = new CheckBox {Text = "Checking contents will take a long time", Size = new Size(300, 20)};
         private readonly Label _waringLabel = new Label {Text = "Check contents:", Size = new Size(95, 20), AutoSize = false};
 
