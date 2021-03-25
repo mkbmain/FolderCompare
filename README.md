@@ -46,4 +46,12 @@ also I have seen there are a few things that don't look right on .net on windows
 
 
 
-Enjoy
+## Enjoy
+
+
+
+of course goes with out saying this has worked for my purposes feel free to edit it for yours. 
+
+
+### Legal
+This is released under a free to use free to modify (do what you want with the code and images) license. I take no responsiblity for damages or loss\corruption of data.
