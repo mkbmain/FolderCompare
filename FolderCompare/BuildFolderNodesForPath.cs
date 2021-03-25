@@ -7,7 +7,7 @@ namespace FolderCompare
 {
     internal static class BuildFolderNodesForPath
     {
-        public static DirectoryNode BuildPath(string basePath, string path, bool calcHash = false)
+        public static DirectoryNode BuildPath(string basePath, string path)
         {
             var name = $"{FileAndIoUtils.DirectorySeparator}{NameCleaner(path)}";
             var node = new DirectoryNode
@@ -30,8 +30,7 @@ namespace FolderCompare
                     Name = names,
                     BasePath = basePath,
                     FullLocation = item,
-                    FileInfo = new FileInfo(item),
-                    Hash = calcHash ? FileAndIoUtils.CalculateMd5(item) : string.Empty
+                    FileInfo = new FileInfo(item)
                 });
             }
 

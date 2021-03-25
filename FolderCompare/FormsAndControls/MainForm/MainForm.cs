@@ -13,6 +13,7 @@ namespace FolderCompare.FormsAndControls.MainForm
         private readonly DirectoryPanel _folderOne = new DirectoryPanel();
         private readonly DirectoryPanel _folderTwo = new DirectoryPanel();
         private readonly Button _runBtn = new Button {Text = "Calculate", BackColor = GlobalColor.Get(ColorFor.Button)};
+        private readonly ProgressBar _progressBar = new ProgressBar {Maximum = 100, Size = new Size(100, 25)};
 
         private readonly Label _waringLabel = new Label
         {
@@ -27,6 +28,7 @@ namespace FolderCompare.FormsAndControls.MainForm
         {
             BackColor = GlobalColor.Get(ColorFor.Window);
             Controls.Add(_runBtn);
+            Controls.Add(_progressBar);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             _folderTwo.Top = _folderOne.Bottom + 5;
@@ -37,7 +39,8 @@ namespace FolderCompare.FormsAndControls.MainForm
             _runBtn.Click += RunBtn_Click;
             _waringLabel.Location = new Point(10, _folderTwo.Bottom + 5);
             _checkBox.Location = new Point(_waringLabel.Right + 10, _waringLabel.Top + 3);
-            _runBtn.Location = new Point(33 + _folderTwo.Bottom, _checkBox.Bottom+15);
+            _runBtn.Location = new Point(33 + _folderTwo.Bottom, _checkBox.Bottom + 15);
+            _progressBar.Location = new Point(_runBtn.Left + _runBtn.Size.Width + 10, _runBtn.Top);
             Controls.Add(_checkBox);
             Controls.Add(_waringLabel);
         }
@@ -56,16 +59,21 @@ namespace FolderCompare.FormsAndControls.MainForm
             _runBtn.Text = "Calculating";
             _runBtn.Enabled = false;
 
+            _progressBar.Visible = true;
             BackgroundGenerator.Run(
                 new BackgroundWorkerInfo {PathOne = pathOne, PathTwo = pathTwo, CheckContents = _checkBox.Checked},
                 DoWork, (a, b) =>
                 {
                     _runBtn.Enabled = true;
                     var issues = CalculateDifferences.Issues(_folderNodeOne.BasePath, _folderNodeTwo.BasePath,
-                        _folderNodeOne, _folderNodeTwo);
+                        _folderNodeOne, _folderNodeTwo, _checkBox.Checked);
+                    _progressBar.Value = 95;
+                    MessageBox.Show("Done see results");
                     var fc = new ResultsForm.ResultsForm(issues);
                     fc.Show();
                     _runBtn.Text = "Calculate";
+                    _progressBar.Visible = false;
+                    _progressBar.Value = 0;
                 }, null);
         }
 
@@ -75,9 +83,10 @@ namespace FolderCompare.FormsAndControls.MainForm
         private void DoWork(object o, DoWorkEventArgs args)
         {
             var info = (BackgroundWorkerInfo) args.Argument;
-            _folderNodeOne = BuildFolderNodesForPath.BuildPath(info.PathOne, info.PathOne, info.CheckContents);
-            _folderNodeTwo = BuildFolderNodesForPath.BuildPath(info.PathTwo, info.PathTwo, info.CheckContents);
-            MessageBox.Show("Results available");
+            _folderNodeOne = BuildFolderNodesForPath.BuildPath(info.PathOne, info.PathOne);
+            _progressBar.Value = info.CheckContents ? 25 : 45;
+            _folderNodeTwo = BuildFolderNodesForPath.BuildPath(info.PathTwo, info.PathTwo);
+            _progressBar.Value = info.CheckContents ? 55 : 85;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace FolderCompare.CalculateMissMatches
     internal static class CalculateDifferences
     {
         public static Issues Issues(string sourceBasePath, string destinationBasePath, DirectoryNode source,
-            DirectoryNode dest)
+            DirectoryNode dest, bool checkContents)
         {
             var output = new Issues
             {
@@ -39,22 +39,22 @@ namespace FolderCompare.CalculateMissMatches
                 return output;
             }
 
-            var items = SortDirectories(sourceBasePath, destinationBasePath, source, dest);
+            var items = SortDirectories(sourceBasePath, destinationBasePath, source, dest, checkContents);
             output.DirectoryResultDetailsList.AddRange(items.DirectoryResultDetailsList);
             output.FileResultDetailsList.AddRange(items.FileResultDetailsList);
 
             // i know this looks like a duplicate but the names being parsed in on last arg switches logic inside method 
-            items = SortDirectories(sourceBasePath, destinationBasePath, source, dest, items.NamesMatched);
+            items = SortDirectories(sourceBasePath, destinationBasePath, source, dest, checkContents, items.NamesMatched);
             output.DirectoryResultDetailsList.AddRange(items.DirectoryResultDetailsList);
             output.FileResultDetailsList.AddRange(items.FileResultDetailsList);
 
-            output.FileResultDetailsList.AddRange(ManageFiles(sourceBasePath, destinationBasePath, source, dest));
+            output.FileResultDetailsList.AddRange(ManageFiles(sourceBasePath, destinationBasePath, source, dest, checkContents));
             return output;
         }
 
         private static IEnumerable<FileResultDetails> ManageFiles(string sourceBasePath, string destinationBasePath,
             DirectoryNode source,
-            DirectoryNode dest)
+            DirectoryNode dest, bool checkContents)
         {
             if (source == null && dest == null)
             {
@@ -71,15 +71,15 @@ namespace FolderCompare.CalculateMissMatches
                 return source.Files.Select(f => ResultActionGenerator.FileGenerator(f, null, destinationBasePath));
             }
 
-            var result = SortFiles(sourceBasePath, destinationBasePath, source, dest);
+            var result = SortFiles(sourceBasePath, destinationBasePath, source, dest, checkContents);
             var list = result.FileResultDetailsList;
-            list.AddRange(SortFiles(sourceBasePath, destinationBasePath, source, dest, result.NamesMatched)
+            list.AddRange(SortFiles(sourceBasePath, destinationBasePath, source, dest, checkContents, result.NamesMatched)
                 .FileResultDetailsList);
             return list;
         }
 
         private static MatchIssue SortFiles(string sourceBasePath, string destinationBasePath,
-            DirectoryNode source, DirectoryNode dest, IReadOnlyDictionary<string, bool> namesDone = null)
+            DirectoryNode source, DirectoryNode dest, bool checkContents, IReadOnlyDictionary<string, bool> namesDone = null)
         {
             var items = new MatchIssue();
             var files = namesDone == null ? source.Files : dest.Files;
@@ -88,7 +88,7 @@ namespace FolderCompare.CalculateMissMatches
                 var checkFile = namesDone == null ? dest : source;
                 var destFile = checkFile.Files.FirstOrDefault(f => f.Name == file.Name);
                 items.NamesMatched.Add(file.Name, true);
-                if (destFile != null && destFile.Hash == file.Hash)
+                if (destFile != null && destFile.FileInfo.Length == file.FileInfo.Length && (!checkContents || destFile.Hash() == file.Hash()))
                 {
                     continue;
                 }
@@ -107,7 +107,7 @@ namespace FolderCompare.CalculateMissMatches
         }
 
         private static MatchIssue SortDirectories(string sourceBasePath, string destinationBasePath,
-            DirectoryNode source, DirectoryNode dest, IReadOnlyDictionary<string, bool> namesDone = null)
+            DirectoryNode source, DirectoryNode dest, bool checkContents, IReadOnlyDictionary<string, bool> namesDone = null)
         {
             var output = new MatchIssue();
             // this is very specific logic that tightly bounds it to above
@@ -120,7 +120,7 @@ namespace FolderCompare.CalculateMissMatches
                 var subMatch = match.SubDirectories.FirstOrDefault(f => f.Name == item.Name);
                 output.NamesMatched.Add(item.Name, true);
                 var complete = Issues(match == dest ? sourceBasePath : destinationBasePath,
-                    match == dest ? destinationBasePath : sourceBasePath, item, subMatch);
+                    match == dest ? destinationBasePath : sourceBasePath, item, subMatch, checkContents);
 
                 foreach (var dir in complete.DirectoryResultDetailsList)
                 {
