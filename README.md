@@ -3,7 +3,7 @@
 Allows you to compare 2 folders or drives to see differences between the files and folders. 
 
 
-This was made in order to ensure my backup drive and it's redundancy plan, another back up driver were up to date with each other and in synch.
+This was made in order to ensure my backup drive and it's redundancy plan, another back up drive were up to date with each other and in synch.
 
 It seems to work fairly well 
 
