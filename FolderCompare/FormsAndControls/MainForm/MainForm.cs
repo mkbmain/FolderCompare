@@ -77,6 +77,7 @@ namespace FolderCompare.FormsAndControls.MainForm
             _runBtn.Text = "Calculate";
             _progressBar.Visible = false;
             _progressBar.Value = 0;
+            MessageBox.Show("Done results available",nameof(FolderCompare));
         }
 
         private void DoWork(object o, DoWorkEventArgs args)
