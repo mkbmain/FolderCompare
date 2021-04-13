@@ -27,7 +27,7 @@ This was done in this version of .net so it was compatible with mono as all \ ma
 <img title="" alt="Alt text" src="./Images/1Start.JPG" width = 350px>
 <p> Select folder</p>
 <img title="" alt="Alt text" src="./Images/2BrowseFolder.JPG" width = 350px>
-<p> by clicking the check contents it will do a md5 hash check on the files this can take a long time with out will just compare size of items in bytes to see diffrences</p>
+<p> by clicking the check contents it will do a md5 hash check on the files this can take a long time with out will just compare size of items in bytes to see diffrences. I personally have never found a need to run with the check contents (as it will check size of the files regardless) but the options there if you do require it</p>
 <img title="" alt="Alt text" src="./Images/3FolderSetup.JPG" width = 350px>
 <p> then just wait and enjoy, a progress bar buttons will be disabled at this point</p>
 <img title="" alt="Alt text" src="./Images/4WaitForProgress.JPG" width = 350px>
