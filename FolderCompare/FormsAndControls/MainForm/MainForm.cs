@@ -49,7 +49,13 @@ namespace FolderCompare.FormsAndControls.MainForm
             var pathTwo = _folderTwo.GetPathIfValid;
             if (pathOne == null || pathTwo == null)
             {
-                MessageBox.Show("Please check paths");
+                MessageBox.Show("Please check paths", "Folder compare");
+                return;
+            }
+
+            if (pathOne.Contains(pathTwo) || pathTwo.Contains(pathOne))
+            {
+                MessageBox.Show("can not check folders that contain a child that it iss being compared to","Folder compare");
                 return;
             }
 
@@ -64,9 +70,10 @@ namespace FolderCompare.FormsAndControls.MainForm
         {
             var issues = CalculateDifferencesDirectories.Issues(_folderNodeOne.BasePath, _folderNodeTwo.BasePath,
                 _folderNodeOne, _folderNodeTwo, _checkBox.Checked);
-            _progressBar.Value = 95;
+            _progressBar.Value = 85;
+            var results = new ResultsForm.ResultsForm(issues);
             MessageBox.Show("Done see results");
-            new ResultsForm.ResultsForm(issues).Show();
+            results.Show();
             _runBtn.Enabled = true;
             _runBtn.Text = "Calculate";
             _progressBar.Visible = false;
