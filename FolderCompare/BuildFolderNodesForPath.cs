@@ -9,10 +9,9 @@ namespace FolderCompare
     {
         public static DirectoryNode BuildPath(string basePath, string path)
         {
-            var name = $"{FileAndIoUtils.DirectorySeparator}{NameCleaner(path)}";
             var node = new DirectoryNode
             {
-                Name = name,
+                Name = $"{FileAndIoUtils.DirectorySeparator}{NameCleaner(path)}",
                 BasePath = basePath,
                 FullLocation = path
             };
