@@ -4,13 +4,6 @@
         <TargetFramework>net472</TargetFramework>
         <OutputType>WinExe</OutputType>
     </PropertyGroup>
-
-    <ItemGroup>
-      <Reference Include="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-        <HintPath>..\..\..\..\..\Windows\Microsoft.NET\assembly\GAC_MSIL\System.Windows.Forms\v4.0_4.0.0.0__b77a5c561934e089\System.Windows.Forms.dll</HintPath>
-      </Reference>
-    </ItemGroup>
-
     <ItemGroup>
       <None Remove="folder.svg" />
       <None Remove="folder-documents.svg" />
@@ -22,6 +15,10 @@
       <None Remove="FolderIcon.png" />
       <None Remove="opened-folder.png" />
       <EmbeddedResource Include="openedfolder.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="System.Windows.Forms" />
     </ItemGroup>
 
 </Project>
