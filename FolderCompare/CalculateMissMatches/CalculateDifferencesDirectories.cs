@@ -43,7 +43,7 @@ namespace FolderCompare.CalculateMissMatches
             output.DirectoryResultDetailsList.AddRange(items.DirectoryResultDetailsList);
             output.FileResultDetailsList.AddRange(items.FileResultDetailsList);
 
-            // i know this looks like a duplicate but the names being parsed in on last arg switches logic inside method 
+            // i know this looks like a duplicate but the names being parsed in on last arg switches logic inside method to do dest not source 
             items = SortDirectories(sourceBasePath, destinationBasePath, source, dest, checkContents, items.NamesMatched);
             output.DirectoryResultDetailsList.AddRange(items.DirectoryResultDetailsList);
             output.FileResultDetailsList.AddRange(items.FileResultDetailsList);
@@ -54,7 +54,7 @@ namespace FolderCompare.CalculateMissMatches
         
 
         private static MatchResultPotentialIssue SortDirectories(string sourceBasePath, string destinationBasePath,
-            DirectoryNode source, DirectoryNode dest, bool checkContents, IReadOnlyDictionary<string, bool> namesDone = null)
+            DirectoryNode source, DirectoryNode dest, bool checkContents, IReadOnlyDictionary<string, bool> namesDone = null)    // names done switches source and dest with in method
         {
             var output = new MatchResultPotentialIssue();
             // this is very specific logic that tightly bounds it to above

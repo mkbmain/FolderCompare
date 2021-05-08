@@ -30,13 +30,15 @@ namespace FolderCompare.CalculateMissMatches
 
             var result = SortFiles(sourceBasePath, destinationBasePath, source, dest, checkContents);
             var list = result.FileResultDetailsList;
+            
+            // parsing in NamesMatched makes the logic with in the method switch source and destination
             list.AddRange(SortFiles(sourceBasePath, destinationBasePath, source, dest, checkContents, result.NamesMatched)
                 .FileResultDetailsList);
             return list;
         }
-
+        
         private static MatchResultPotentialIssue SortFiles(string sourceBasePath, string destinationBasePath,
-            DirectoryNode source, DirectoryNode dest, bool checkContents, IReadOnlyDictionary<string, bool> namesDone = null)
+            DirectoryNode source, DirectoryNode dest, bool checkContents, IReadOnlyDictionary<string, bool> namesDone = null)       // names done switches source and dest with in method
         {
             var items = new MatchResultPotentialIssue();
             var files = namesDone == null ? source.Files : dest.Files;
