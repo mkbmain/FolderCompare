@@ -15,9 +15,15 @@ namespace FolderCompare.FormsAndControls.MainForm
         private readonly DirectoryPanel _folderOne = new DirectoryPanel();
         private readonly DirectoryPanel _folderTwo = new DirectoryPanel();
         private readonly Button _runBtn = new Button {Text = "Calculate", BackColor = GlobalColor.Get(ColorFor.Button)};
-        private readonly ProgressBar _progressBar = new ProgressBar {Maximum = 100, Size = new Size(100, 25), Visible = false};
-        private readonly CheckBox _checkBox = new CheckBox {Text = "Checking contents will take a long time", Size = new Size(300, 20)};
-        private readonly Label _waringLabel = new Label {Text = "Check contents:", Size = new Size(95, 20), AutoSize = false};
+
+        private readonly ProgressBar _progressBar = new ProgressBar
+            {Maximum = 100, Size = new Size(100, 25), Visible = false};
+
+        private readonly CheckBox _checkBox = new CheckBox
+            {Text = "Checking contents will take a long time", Size = new Size(300, 20)};
+
+        private readonly Label _waringLabel = new Label
+            {Text = "Check contents:", Size = new Size(95, 20), AutoSize = false};
 
         private DirectoryNode _folderNodeOne;
         private DirectoryNode _folderNodeTwo;
@@ -55,14 +61,16 @@ namespace FolderCompare.FormsAndControls.MainForm
 
             if (pathOne.Contains(pathTwo) || pathTwo.Contains(pathOne))
             {
-                MessageBox.Show("can not check folders that contain a child that it iss being compared to",nameof(FolderCompare));
+                MessageBox.Show("can not check folders that contain a child that it iss being compared to",
+                    nameof(FolderCompare));
                 return;
             }
 
             _runBtn.Text = "Calculating";
             _runBtn.Enabled = false;
             _progressBar.Visible = true;
-            var backGroundTaskArgs = new BackgroundWorkerInfo {PathOne = pathOne, PathTwo = pathTwo, CheckContents = _checkBox.Checked};
+            var backGroundTaskArgs = new BackgroundWorkerInfo
+                {PathOne = pathOne, PathTwo = pathTwo, CheckContents = _checkBox.Checked};
             BackgroundGenerator.Run(backGroundTaskArgs, DoWork, WhenComplete, null);
         }
 
@@ -77,16 +85,24 @@ namespace FolderCompare.FormsAndControls.MainForm
             _runBtn.Text = "Calculate";
             _progressBar.Visible = false;
             _progressBar.Value = 0;
-            MessageBox.Show("Done results available",nameof(FolderCompare));
+            MessageBox.Show("Done results available", nameof(FolderCompare));
         }
 
         private void DoWork(object o, DoWorkEventArgs args)
         {
-            var info = (BackgroundWorkerInfo) args.Argument;
-            _folderNodeOne = BuildFolderNodesForPath.BuildPath(info.PathOne, info.PathOne);
-            _progressBar.Value = info.CheckContents ? 25 : 45;
-            _folderNodeTwo = BuildFolderNodesForPath.BuildPath(info.PathTwo, info.PathTwo);
-            _progressBar.Value = info.CheckContents ? 55 : 85;
+            try
+            {
+                var info = (BackgroundWorkerInfo) args.Argument;
+                _folderNodeOne = BuildFolderNodesForPath.BuildPath(info.PathOne, info.PathOne);
+                _progressBar.Value = info.CheckContents ? 25 : 45;
+                _folderNodeTwo = BuildFolderNodesForPath.BuildPath(info.PathTwo, info.PathTwo);
+                _progressBar.Value = info.CheckContents ? 55 : 85;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message + Environment.NewLine + e.StackTrace);
+                Application.Exit();
+            }
         }
     }
 }
