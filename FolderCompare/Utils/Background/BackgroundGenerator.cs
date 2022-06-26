@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel;
 
-namespace FolderCompare.Utils
+namespace FolderCompare.Utils.Background
 {
     internal static class BackgroundGenerator
     {

@@ -1,12 +1,10 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using FolderCompare.CalculateMissMatches;
 using FolderCompare.FormsAndControls.MainForm.Controls;
-using FolderCompare.Models;
-using FolderCompare.Models.ScanStructure;
 using FolderCompare.Utils;
+using FolderCompare.Utils.Background;
 
 namespace FolderCompare.FormsAndControls.MainForm
 {
@@ -14,19 +12,17 @@ namespace FolderCompare.FormsAndControls.MainForm
     {
         private readonly DirectoryPanel _folderOne = new DirectoryPanel();
         private readonly DirectoryPanel _folderTwo = new DirectoryPanel();
-        private readonly Button _runBtn = new Button {Text = "Calculate", BackColor = GlobalColor.Get(ColorFor.Button)};
-
+        private readonly Button _runBtn = new Button { Text = "Calculate", BackColor = GlobalColor.Get(ColorFor.Button) };
+        private readonly FolderCompareTaskRunner _threadHelper = new FolderCompareTaskRunner();
         private readonly ProgressBar _progressBar = new ProgressBar
-            {Maximum = 100, Size = new Size(100, 25), Visible = false};
+        { Maximum = 100, Size = new Size(100, 25), Visible = false };
 
         private readonly CheckBox _checkBox = new CheckBox
-            {Text = "Checking contents will take a long time", Size = new Size(300, 20)};
+        { Text = "Checking contents will take a long time", Size = new Size(300, 20) };
 
         private readonly Label _waringLabel = new Label
-            {Text = "Check contents:", Size = new Size(95, 20), AutoSize = false};
+        { Text = "Check contents:", Size = new Size(95, 20), AutoSize = false };
 
-        private DirectoryNode _folderNodeOne;
-        private DirectoryNode _folderNodeTwo;
 
         public MainForm()
         {
@@ -36,6 +32,8 @@ namespace FolderCompare.FormsAndControls.MainForm
             Text = "Folder comparer";
             Size = new Size(410, 160);
             _folderTwo.Top = _folderOne.Bottom + 5;
+            _threadHelper.SetProgressBarPercent += ThreadHelperOnSetProgressBarPercent;
+            _threadHelper.Done += ThreadHelperOnDone;
             _runBtn.Click += RunBtn_Click;
             _waringLabel.Location = new Point(10, _folderTwo.Bottom + 5);
             _checkBox.Location = new Point(_waringLabel.Right + 10, _waringLabel.Top + 3);
@@ -47,6 +45,39 @@ namespace FolderCompare.FormsAndControls.MainForm
             Controls.Add(_folderTwo);
             Controls.Add(_checkBox);
             Controls.Add(_waringLabel);
+        }
+
+        private void ThreadHelperOnDone(object sender, FolderCompareTaskRunner.DoneEventArgs e)
+        {
+            ThreadHelper.InvokeOnCtrl(this, () =>
+            {
+                var results = new ResultsForm.ResultsForm(e.Issues);
+                results.Show();
+                MessageBox.Show("Done results available", nameof(FolderCompare));
+            });
+
+            ThreadHelper.InvokeOnCtrl(_progressBar, () =>
+            {
+                _progressBar.Visible = false;
+                _progressBar.Value = 0; ;
+            });
+            ThreadHelper.InvokeOnCtrl(_runBtn, () =>
+            {
+                _runBtn.Enabled = true;
+                _runBtn.Text = "Calculate";
+            });
+            ;
+        }
+
+
+        private void ThreadHelperOnSetProgressBarPercent(object sender, FolderCompareTaskRunner.SetPercentEventArgs e)
+        {
+            ThreadHelper.InvokeOnCtrl(_progressBar, () =>
+            {
+                _progressBar.Value = e.Percent;
+                _progressBar.Update();
+                _progressBar.Refresh();
+            });
         }
 
         private void RunBtn_Click(object sender, EventArgs e)
@@ -69,44 +100,7 @@ namespace FolderCompare.FormsAndControls.MainForm
             _runBtn.Text = "Calculating";
             _runBtn.Enabled = false;
             _progressBar.Visible = true;
-            var backGroundTaskArgs = new BackgroundWorkerInfo
-                {PathOne = pathOne, PathTwo = pathTwo, CheckContents = _checkBox.Checked};
-            BackgroundGenerator.Run(backGroundTaskArgs, DoWork, WhenComplete, null);
-        }
-
-        private void WhenComplete(object o, RunWorkerCompletedEventArgs completedEventArgs)
-        {
-            var issues = CalculateDifferencesDirectories.Issues(_folderNodeOne.BasePath, _folderNodeTwo.BasePath,
-                _folderNodeOne, _folderNodeTwo, _checkBox.Checked);
-            _progressBar.Invoke(new MethodInvoker(delegate { SetPercent(85, false); }));
-            var results = new ResultsForm.ResultsForm(issues);
-            results.Show();
-            _runBtn.Enabled = true;
-            _runBtn.Text = "Calculate";
-            _progressBar.Invoke(new MethodInvoker(delegate { SetPercent(0, false); }));
-            MessageBox.Show("Done results available", nameof(FolderCompare));
-        }
-
-        private void SetPercent(int percent,bool visible)
-        {
-            _progressBar.Value = percent;
-            _progressBar.Visible = visible;
-        }
-        private void DoWork(object o, DoWorkEventArgs args)
-        {
-            try
-            {
-                var info = (BackgroundWorkerInfo) args.Argument;
-                _folderNodeOne = BuildFolderNodesForPath.BuildPath(info.PathOne, info.PathOne);
-                _progressBar.Invoke(new MethodInvoker(delegate { SetPercent(info.CheckContents ? 25 : 45, true); }));
-                _folderNodeTwo = BuildFolderNodesForPath.BuildPath(info.PathTwo, info.PathTwo);
-                _progressBar.Invoke(new MethodInvoker(delegate { SetPercent(info.CheckContents ? 55 : 85, true); }));
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message + Environment.NewLine + e.StackTrace);
-                Application.Exit();
-            }
+            Task.Run(() => _threadHelper.DoWork(pathOne, pathTwo, _checkBox.Checked));
         }
     }
 }

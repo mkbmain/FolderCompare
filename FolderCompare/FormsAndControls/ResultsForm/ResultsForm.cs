@@ -32,57 +32,75 @@ namespace FolderCompare.FormsAndControls.ResultsForm
 
         private void DrawWindow()
         {
-            if (_panel != null && Controls.Contains(_panel))
+            ThreadHelper.InvokeOnCtrl(this, () =>
             {
-                Controls.Remove(_panel);
-            }
+                if (this._panel != null && this.Controls.Contains(_panel))
+                {
+                    this.Controls.Remove(_panel);
+                }
 
-            _panel = new Panel
-            {
-                Location = new Point(15, 15), Name = "M",
-                Size = new Size(Width - 30, Height - 50),
-                AutoScroll = true
-            };
+                _panel = new Panel
+                {
+                    Location = new Point(15, 15),
+                    Name = "M",
+                    Size = new Size(Width - 30, Height - 50),
+                    AutoScroll = true
+                };
+            });
 
-            foreach (var item in _panel.Controls.Cast<Control>())
+            ThreadHelper.InvokeOnCtrl(_panel, () =>
             {
-                _panel.Controls.Remove(item);
-            }
+                foreach (var item in _panel.Controls.Cast<Control>())
+                {
+                    _panel.Controls.Remove(item);
+                }
 
-            var location = 0;
-            foreach (var item in Directories.OrderBy(f => !f.Source))
-            {
-                var directoryView = new DirectoryView(item) {Top = location};
-                directoryView.PathChosen += DirectoryOnPathChosen;
-                directoryView.BackGroundTask += DirectoryViewOnBackGroundTask;
-                location += directoryView.Height + 5;
-                _panel.Controls.Add(directoryView);
-            }
+                var location = 0;
+                foreach (var item in Directories.OrderBy(f => !f.Source))
+                {
+                    var directoryView = new DirectoryView(item) { Top = location };
+                    directoryView.PathChosen += DirectoryOnPathChosen;
+                    directoryView.BackGroundTask += DirectoryViewOnBackGroundTask;
+                    location += directoryView.Height + 5;
+                    _panel.Controls.Add(directoryView);
+                }
 
-            foreach (var item in Files.OrderBy(f => !f.Source).ThenByDescending(x => x.Data.FileInfo.Length))
-            {
-                var fileView = new FileView(item) {Top = location};
-                fileView.PathChosen += FileOnPathChosen;
-                fileView.BackGroundTask += DirectoryViewOnBackGroundTask;
-                location += fileView.Height + 5;
-                _panel.Controls.Add(fileView);
-            }
+                foreach (var item in Files.OrderBy(f => !f.Source).ThenByDescending(x => x.Data.FileInfo.Length))
+                {
+                    var fileView = new FileView(item) { Top = location };
+                    fileView.PathChosen += FileOnPathChosen;
+                    fileView.BackGroundTask += DirectoryViewOnBackGroundTask;
+                    location += fileView.Height + 5;
+                    _panel.Controls.Add(fileView);
+                }
+            });
 
-            if (Directories.Any() || Files.Any())
+
+
+            ThreadHelper.InvokeOnCtrl(this, () =>
             {
-                Controls.Add(_panel);  
-            }
-            else
-            {
-                Controls.Add(new Label{Text =  "No Differences found",AutoSize = false,Size = new Size(300,100),
-                    Font =  new Font(FontFamily.GenericMonospace, 20, FontStyle.Bold)});
-            }
+                if (Directories.Any() || Files.Any())
+                {
+                    Controls.Add(_panel);
+                }
+                else
+                {
+                    Controls.Add(new Label
+                    {
+                        Text = "No Differences found",
+                        AutoSize = false,
+                        Size = new Size(300, 100),
+                        Font = new Font(FontFamily.GenericMonospace, 20, FontStyle.Bold)
+                    });
+                }
+            });
+
 
         }
 
         private void DirectoryViewOnBackGroundTask(object sender, EventArgs e)
         {
-            _panel.Enabled = false;
+            ThreadHelper.InvokeOnCtrl(_panel, () => _panel.Enabled = true);
         }
 
         private void DirectoryOnPathChosen(object sender, EventArgs e)
