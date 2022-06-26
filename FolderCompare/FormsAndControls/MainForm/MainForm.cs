@@ -32,7 +32,10 @@ namespace FolderCompare.FormsAndControls.MainForm
             Text = "Folder comparer";
             Size = new Size(410, 160);
             _folderTwo.Top = _folderOne.Bottom + 5;
-            _threadHelper.SetProgressBarPercent += ThreadHelperOnSetProgressBarPercent;
+            _threadHelper.SetProgressBarPercent += (sender, args) => ThreadHelper.InvokeOnCtrl(_progressBar, () =>
+            {
+                _progressBar.Value = args.Percent;
+            }); 
             _threadHelper.Done += ThreadHelperOnDone;
             _runBtn.Click += RunBtn_Click;
             _waringLabel.Location = new Point(10, _folderTwo.Bottom + 5);
@@ -59,14 +62,6 @@ namespace FolderCompare.FormsAndControls.MainForm
                 _progressBar.Value = 0; ;
                 _runBtn.Enabled = true;
                 _runBtn.Text = "Calculate";
-            });
-        }
-
-        private void ThreadHelperOnSetProgressBarPercent(object sender, FolderCompareTaskRunner.SetPercentEventArgs e)
-        {
-            ThreadHelper.InvokeOnCtrl(_progressBar, () =>
-            {
-                _progressBar.Value = e.Percent;
             });
         }
 
