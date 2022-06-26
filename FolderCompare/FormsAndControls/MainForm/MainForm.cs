@@ -51,32 +51,22 @@ namespace FolderCompare.FormsAndControls.MainForm
         {
             ThreadHelper.InvokeOnCtrl(this, () =>
             {
+                _progressBar.Value = 85;
                 var results = new ResultsForm.ResultsForm(e.Issues);
                 results.Show();
                 MessageBox.Show("Done results available", nameof(FolderCompare));
-            });
-
-            ThreadHelper.InvokeOnCtrl(_progressBar, () =>
-            {
                 _progressBar.Visible = false;
                 _progressBar.Value = 0; ;
-            });
-            ThreadHelper.InvokeOnCtrl(_runBtn, () =>
-            {
                 _runBtn.Enabled = true;
                 _runBtn.Text = "Calculate";
             });
-            ;
         }
-
 
         private void ThreadHelperOnSetProgressBarPercent(object sender, FolderCompareTaskRunner.SetPercentEventArgs e)
         {
             ThreadHelper.InvokeOnCtrl(_progressBar, () =>
             {
                 _progressBar.Value = e.Percent;
-                _progressBar.Update();
-                _progressBar.Refresh();
             });
         }
 

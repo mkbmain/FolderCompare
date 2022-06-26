@@ -29,24 +29,40 @@ namespace FolderCompare.FormsAndControls.ResultsForm
             DrawWindow();
         }
 
+        private void RemoveAndRedrawPanel()
+        {
+            if (this._panel != null && this.Controls.Contains(_panel))
+            {
+                this.Controls.Remove(_panel);
+            }
+
+            _panel = new Panel
+            {
+                Location = new Point(15, 15),
+                Name = "M",
+                Size = new Size(Width - 30, Height - 50),
+                AutoScroll = true
+            };
+            if (Directories.Any() || Files.Any())
+            {
+                Controls.Add(_panel);
+            }
+            else
+            {
+                Controls.Add(new Label
+                {
+                    Text = "No Differences found",
+                    AutoSize = false,
+                    Size = new Size(300, 100),
+                    Font = new Font(FontFamily.GenericMonospace, 20, FontStyle.Bold)
+                });
+            }
+        }
+
 
         private void DrawWindow()
         {
-            ThreadHelper.InvokeOnCtrl(this, () =>
-            {
-                if (this._panel != null && this.Controls.Contains(_panel))
-                {
-                    this.Controls.Remove(_panel);
-                }
-
-                _panel = new Panel
-                {
-                    Location = new Point(15, 15),
-                    Name = "M",
-                    Size = new Size(Width - 30, Height - 50),
-                    AutoScroll = true
-                };
-            });
+            ThreadHelper.InvokeOnCtrl(this, RemoveAndRedrawPanel);
 
             ThreadHelper.InvokeOnCtrl(_panel, () =>
             {
@@ -74,28 +90,6 @@ namespace FolderCompare.FormsAndControls.ResultsForm
                     _panel.Controls.Add(fileView);
                 }
             });
-
-
-
-            ThreadHelper.InvokeOnCtrl(this, () =>
-            {
-                if (Directories.Any() || Files.Any())
-                {
-                    Controls.Add(_panel);
-                }
-                else
-                {
-                    Controls.Add(new Label
-                    {
-                        Text = "No Differences found",
-                        AutoSize = false,
-                        Size = new Size(300, 100),
-                        Font = new Font(FontFamily.GenericMonospace, 20, FontStyle.Bold)
-                    });
-                }
-            });
-
-
         }
 
         private void DirectoryViewOnBackGroundTask(object sender, EventArgs e)
