@@ -78,25 +78,29 @@ namespace FolderCompare.FormsAndControls.MainForm
         {
             var issues = CalculateDifferencesDirectories.Issues(_folderNodeOne.BasePath, _folderNodeTwo.BasePath,
                 _folderNodeOne, _folderNodeTwo, _checkBox.Checked);
-            _progressBar.Value = 85;
+            _progressBar.Invoke(new MethodInvoker(delegate { SetPercent(85, false); }));
             var results = new ResultsForm.ResultsForm(issues);
             results.Show();
             _runBtn.Enabled = true;
             _runBtn.Text = "Calculate";
-            _progressBar.Visible = false;
-            _progressBar.Value = 0;
+            _progressBar.Invoke(new MethodInvoker(delegate { SetPercent(0, false); }));
             MessageBox.Show("Done results available", nameof(FolderCompare));
         }
 
+        private void SetPercent(int percent,bool visible)
+        {
+            _progressBar.Value = percent;
+            _progressBar.Visible = visible;
+        }
         private void DoWork(object o, DoWorkEventArgs args)
         {
             try
             {
                 var info = (BackgroundWorkerInfo) args.Argument;
                 _folderNodeOne = BuildFolderNodesForPath.BuildPath(info.PathOne, info.PathOne);
-                _progressBar.Value = info.CheckContents ? 25 : 45;
+                _progressBar.Invoke(new MethodInvoker(delegate { SetPercent(info.CheckContents ? 25 : 45, true); }));
                 _folderNodeTwo = BuildFolderNodesForPath.BuildPath(info.PathTwo, info.PathTwo);
-                _progressBar.Value = info.CheckContents ? 55 : 85;
+                _progressBar.Invoke(new MethodInvoker(delegate { SetPercent(info.CheckContents ? 55 : 85, true); }));
             }
             catch (Exception e)
             {
