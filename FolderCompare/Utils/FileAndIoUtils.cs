@@ -2,9 +2,24 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Windows.Forms;
 
 namespace FolderCompare.Utils
 {
+    public static class ThreadHelper
+    {
+        public static void InvokeOnCtrl(Control c, Action action)
+        {
+            if (c.InvokeRequired)
+            {
+                c.Invoke(new Action(action));
+                return;
+            }
+
+            action();
+        }
+    }
+
     internal static class FileAndIoUtils
     {
         private static char? _directorySeparatorStr;

@@ -29,60 +29,72 @@ namespace FolderCompare.FormsAndControls.ResultsForm
             DrawWindow();
         }
 
-
-        private void DrawWindow()
+        private void RemoveAndRedrawPanel()
         {
-            if (_panel != null && Controls.Contains(_panel))
+            if (this._panel != null && this.Controls.Contains(_panel))
             {
-                Controls.Remove(_panel);
+                this.Controls.Remove(_panel);
             }
 
             _panel = new Panel
             {
-                Location = new Point(15, 15), Name = "M",
+                Location = new Point(15, 15),
+                Name = "M",
                 Size = new Size(Width - 30, Height - 50),
                 AutoScroll = true
             };
-
-            foreach (var item in _panel.Controls.Cast<Control>())
-            {
-                _panel.Controls.Remove(item);
-            }
-
-            var location = 0;
-            foreach (var item in Directories.OrderBy(f => !f.Source))
-            {
-                var directoryView = new DirectoryView(item) {Top = location};
-                directoryView.PathChosen += DirectoryOnPathChosen;
-                directoryView.BackGroundTask += DirectoryViewOnBackGroundTask;
-                location += directoryView.Height + 5;
-                _panel.Controls.Add(directoryView);
-            }
-
-            foreach (var item in Files.OrderBy(f => !f.Source).ThenByDescending(x => x.Data.FileInfo.Length))
-            {
-                var fileView = new FileView(item) {Top = location};
-                fileView.PathChosen += FileOnPathChosen;
-                fileView.BackGroundTask += DirectoryViewOnBackGroundTask;
-                location += fileView.Height + 5;
-                _panel.Controls.Add(fileView);
-            }
-
             if (Directories.Any() || Files.Any())
             {
-                Controls.Add(_panel);  
+                Controls.Add(_panel);
             }
             else
             {
-                Controls.Add(new Label{Text =  "No Differences found",AutoSize = false,Size = new Size(300,100),
-                    Font =  new Font(FontFamily.GenericMonospace, 20, FontStyle.Bold)});
+                Controls.Add(new Label
+                {
+                    Text = "No Differences found",
+                    AutoSize = false,
+                    Size = new Size(300, 100),
+                    Font = new Font(FontFamily.GenericMonospace, 20, FontStyle.Bold)
+                });
             }
+        }
 
+
+        private void DrawWindow()
+        {
+            ThreadHelper.InvokeOnCtrl(this, RemoveAndRedrawPanel);
+
+            ThreadHelper.InvokeOnCtrl(_panel, () =>
+            {
+                foreach (var item in _panel.Controls.Cast<Control>())
+                {
+                    _panel.Controls.Remove(item);
+                }
+
+                var location = 0;
+                foreach (var item in Directories.OrderBy(f => !f.Source))
+                {
+                    var directoryView = new DirectoryView(item) { Top = location };
+                    directoryView.PathChosen += DirectoryOnPathChosen;
+                    directoryView.BackGroundTask += DirectoryViewOnBackGroundTask;
+                    location += directoryView.Height + 5;
+                    _panel.Controls.Add(directoryView);
+                }
+
+                foreach (var item in Files.OrderBy(f => !f.Source).ThenByDescending(x => x.Data.FileInfo.Length))
+                {
+                    var fileView = new FileView(item) { Top = location };
+                    fileView.PathChosen += FileOnPathChosen;
+                    fileView.BackGroundTask += DirectoryViewOnBackGroundTask;
+                    location += fileView.Height + 5;
+                    _panel.Controls.Add(fileView);
+                }
+            });
         }
 
         private void DirectoryViewOnBackGroundTask(object sender, EventArgs e)
         {
-            _panel.Enabled = false;
+            ThreadHelper.InvokeOnCtrl(this, () => this._panel.Enabled = false);
         }
 
         private void DirectoryOnPathChosen(object sender, EventArgs e)

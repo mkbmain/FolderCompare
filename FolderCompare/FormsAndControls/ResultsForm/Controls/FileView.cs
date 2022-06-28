@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using FolderCompare.Models.ResultStructure;
 using FolderCompare.Utils;
+using FolderCompare.Utils.Background;
 
 namespace FolderCompare.FormsAndControls.ResultsForm.Controls
 {
