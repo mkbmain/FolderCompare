@@ -94,7 +94,7 @@ namespace FolderCompare.FormsAndControls.ResultsForm
 
         private void DirectoryViewOnBackGroundTask(object sender, EventArgs e)
         {
-            ThreadHelper.InvokeOnCtrl(_panel, () => _panel.Enabled = true);
+            ThreadHelper.InvokeOnCtrl(this, () => this._panel.Enabled = false);
         }
 
         private void DirectoryOnPathChosen(object sender, EventArgs e)
