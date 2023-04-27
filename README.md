@@ -7,17 +7,14 @@ This was made in order to ensure my backup drive and it's redundancy plan, anoth
 
 It seems to work fairly well 
 
+## Please note
+This was done in this version of .net so it was compatible with mono as all \ majority of the development for this was done on linux meaning visual studio designer for forms will probably not work as all forms and controls where done by hand.
 
-# Find difference in files
+# Find difference in files and directories 
 <p>Select Path Let it run </p>
 <img title="" alt="Alt text" src="./Images/3FolderSetup.JPG" width = 350px>
 <p>Review</p>
 <img title="" alt="Alt text" src="./Images/6Results.JPG" width = 350px>
-
-
-
-## Please note
-This was done in this version of .net so it was compatible with mono as all \ majority of the development for this was done on linux meaning visual studio designer for forms will probably not work as all forms and controls where done by hand.
 
 
 
